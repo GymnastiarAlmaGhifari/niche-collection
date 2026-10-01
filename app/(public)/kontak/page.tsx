@@ -2,108 +2,117 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { getConfig } from "@/lib/data";
-import { Mail, MessageCircle, MapPin } from "lucide-react";
+import { toast } from "sonner";
+import { Mail, MapPin, Send } from "lucide-react";
 
 export default function KontakPage() {
-  const config = getConfig();
   const [loading, setLoading] = useState(false);
-  const [sent, setSent] = useState(false);
+  
+  // Form State
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [subject, setSubject] = useState("");
+  const [message, setMessage] = useState("");
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
-    setTimeout(() => {
+
+    try {
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name, email, subject, message }),
+      });
+
+      const data = await res.json();
+      
+      if (!res.ok) {
+        throw new Error(data.error || "Gagal mengirim pesan.");
+      }
+
+      toast.success("Pesan terkirim!", {
+        description: "Terima kasih, kami akan membalas pesan Anda secepatnya.",
+      });
+      
+      // Reset form
+      setName("");
+      setEmail("");
+      setSubject("");
+      setMessage("");
+    } catch (error: any) {
+      toast.error("Error", {
+        description: error.message,
+      });
+    } finally {
       setLoading(false);
-      setSent(true);
-    }, 1500);
+    }
   };
 
   return (
-    <div className="container mx-auto px-4 py-12 max-w-5xl">
-      <div className="grid md:grid-cols-2 gap-12">
-        
-        <div>
-          <h1 className="font-heading text-4xl font-bold mb-4 text-primary">Hubungi Kami</h1>
-          <p className="text-muted-foreground text-lg mb-8">
-            Punya pertanyaan seputar produk, ingin merekomendasikan produk, atau sekadar ingin berkolaborasi? Jangan ragu untuk menghubungi kami.
-          </p>
-          
-          <div className="space-y-6">
-            <div className="flex items-start gap-4">
-              <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center shrink-0">
-                <Mail className="h-5 w-5 text-primary" />
-              </div>
-              <div>
-                <h3 className="font-bold text-lg">Email</h3>
-                <p className="text-muted-foreground mb-1">Untuk kolaborasi dan pertanyaan umum.</p>
-                <a href={`mailto:${config.social.email}`} className="text-primary hover:underline font-medium">
-                  {config.social.email}
-                </a>
-              </div>
+    <div className="container mx-auto px-4 py-12 max-w-4xl">
+      <div className="text-center mb-12">
+        <h1 className="font-heading text-4xl font-bold mb-4 text-primary">Hubungi Kami</h1>
+        <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+          Punya pertanyaan, saran, atau ingin merekomendasikan produk untuk kami kurasi? Jangan ragu untuk menghubungi kami melalui form di bawah ini.
+        </p>
+      </div>
+
+      <div className="grid md:grid-cols-3 gap-10">
+        <div className="md:col-span-1 space-y-6">
+          <div className="flex items-start gap-4">
+            <div className="bg-primary/10 p-3 rounded-full">
+              <Mail className="h-6 w-6 text-primary" />
             </div>
-            
-            <div className="flex items-start gap-4">
-              <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center shrink-0">
-                <MessageCircle className="h-5 w-5 text-primary" />
-              </div>
-              <div>
-                <h3 className="font-bold text-lg">WhatsApp</h3>
-                <p className="text-muted-foreground mb-1">Respon cepat di jam kerja (09.00 - 17.00 WIB).</p>
-                <a href={config.social.whatsapp} target="_blank" rel="noreferrer" className="text-primary hover:underline font-medium">
-                  Hubungi via WhatsApp
-                </a>
-              </div>
+            <div>
+              <h3 className="font-semibold text-lg">Email</h3>
+              <p className="text-muted-foreground">halo@nichecollection.com</p>
+            </div>
+          </div>
+          
+          <div className="flex items-start gap-4">
+            <div className="bg-primary/10 p-3 rounded-full">
+              <MapPin className="h-6 w-6 text-primary" />
+            </div>
+            <div>
+              <h3 className="font-semibold text-lg">Lokasi</h3>
+              <p className="text-muted-foreground">Online & Berbasis Remote<br/>Jakarta, Indonesia</p>
             </div>
           </div>
         </div>
 
-        <div className="bg-card border rounded-2xl p-8 shadow-sm">
-          <h2 className="font-heading text-2xl font-bold mb-6">Kirim Pesan</h2>
-          
-          {sent ? (
-            <div className="bg-emerald-50 text-emerald-600 border border-emerald-200 rounded-xl p-6 text-center">
-              <div className="w-12 h-12 bg-emerald-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                <Mail className="h-6 w-6" />
+        <div className="md:col-span-2">
+          <form onSubmit={handleSubmit} className="space-y-6 bg-card p-8 rounded-xl border shadow-sm">
+            <div className="grid grid-cols-2 gap-4">
+              <div className="space-y-2">
+                <label className="text-sm font-medium">Nama Anda</label>
+                <Input required value={name} onChange={e=>setName(e.target.value)} placeholder="Budi Santoso" />
               </div>
-              <h3 className="font-bold text-lg mb-2">Pesan Berhasil Terkirim!</h3>
-              <p>Terima kasih telah menghubungi kami. Tim kami akan segera merespons pesan Anda.</p>
-              <Button variant="outline" className="mt-6" onClick={() => setSent(false)}>Kirim Pesan Lain</Button>
+              <div className="space-y-2">
+                <label className="text-sm font-medium">Email Anda</label>
+                <Input required type="email" value={email} onChange={e=>setEmail(e.target.value)} placeholder="budi@example.com" />
+              </div>
             </div>
-          ) : (
-            <form onSubmit={handleSubmit} className="space-y-4">
-              <div className="space-y-2">
-                <label className="text-sm font-medium">Nama Lengkap</label>
-                <Input placeholder="Budi Santoso" required />
-              </div>
-              <div className="space-y-2">
-                <label className="text-sm font-medium">Alamat Email</label>
-                <Input type="email" placeholder="budi@example.com" required />
-              </div>
-              <div className="space-y-2">
-                <label className="text-sm font-medium">Topik</label>
-                <select className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm">
-                  <option>Pertanyaan Produk</option>
-                  <option>Rekomendasi Produk</option>
-                  <option>Kolaborasi Bisnis</option>
-                  <option>Lainnya</option>
-                </select>
-              </div>
-              <div className="space-y-2">
-                <label className="text-sm font-medium">Pesan</label>
-                <textarea 
-                  className="flex min-h-[120px] w-full rounded-md border border-input bg-background px-3 py-2 text-sm"
-                  placeholder="Tuliskan pesan Anda di sini..."
-                  required
-                ></textarea>
-              </div>
-              <Button type="submit" className="w-full h-12" disabled={loading}>
-                {loading ? "Mengirim..." : "Kirim Pesan Sekarang"}
-              </Button>
-            </form>
-          )}
+            <div className="space-y-2">
+              <label className="text-sm font-medium">Subjek</label>
+              <Input required value={subject} onChange={e=>setSubject(e.target.value)} placeholder="Pertanyaan tentang produk X" />
+            </div>
+            <div className="space-y-2">
+              <label className="text-sm font-medium">Pesan</label>
+              <textarea 
+                required
+                className="flex min-h-[150px] w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+                placeholder="Tulis pesan Anda di sini..."
+                value={message}
+                onChange={e=>setMessage(e.target.value)}
+              ></textarea>
+            </div>
+            <Button type="submit" className="w-full" disabled={loading}>
+              <Send className="mr-2 h-4 w-4" /> 
+              {loading ? "Mengirim..." : "Kirim Pesan"}
+            </Button>
+          </form>
         </div>
-
       </div>
     </div>
   );

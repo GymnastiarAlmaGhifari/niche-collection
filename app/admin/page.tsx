@@ -1,11 +1,34 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Package, Eye, MousePointerClick, TrendingUp } from "lucide-react";
 import { getProducts } from "@/lib/data";
+import { Redis } from "@upstash/redis";
 
-export default function AdminDashboard() {
+export const revalidate = 0; // Disable cache
+
+export default async function AdminDashboard() {
   const products = getProducts();
   const publishedCount = products.filter(p => p.status === 'published').length;
   const draftCount = products.filter(p => p.status === 'draft').length;
+
+  let todayClicks = 0;
+  let totalClicks = 0;
+
+  try {
+    const redis = new Redis({
+      url: process.env.UPSTASH_REDIS_REST_URL!,
+      token: process.env.UPSTASH_REDIS_REST_TOKEN!,
+    });
+
+    const today = new Date().toISOString().split("T")[0];
+    todayClicks = (await redis.get<number>(`clicks:daily:${today}`)) || 0;
+
+    for (const p of products) {
+      const c = await redis.get<number>(`clicks:product:${p.id}`);
+      if (c) totalClicks += c;
+    }
+  } catch (error) {
+    console.error("Failed to fetch redis stats:", error);
+  }
 
   return (
     <div className="space-y-6 animate-in fade-in">
@@ -34,22 +57,22 @@ export default function AdminDashboard() {
             <MousePointerClick className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">142</div>
-            <p className="text-xs text-emerald-500 flex items-center mt-1">
-              <TrendingUp className="h-3 w-3 mr-1" /> +12.5% dari kemarin
+            <div className="text-2xl font-bold">{todayClicks}</div>
+            <p className="text-xs text-muted-foreground mt-1">
+              Dari kunjungan link afiliasi
             </p>
           </CardContent>
         </Card>
         
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Klik Afiliasi (7 Hari)</CardTitle>
+            <CardTitle className="text-sm font-medium">Total Klik Afiliasi</CardTitle>
             <MousePointerClick className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">1,204</div>
+            <div className="text-2xl font-bold">{totalClicks}</div>
             <p className="text-xs text-muted-foreground mt-1">
-              Rata-rata 172 per hari
+              Akumulasi semua produk
             </p>
           </CardContent>
         </Card>
