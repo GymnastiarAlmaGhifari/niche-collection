@@ -1,0 +1,1311 @@
+{
+  "version": "1.0.0",
+  "lastUpdated": "2026-09-30T04:14:39.626Z",
+  "config": {
+    "siteName": "Niche Collection",
+    "tagline": "Kurasi Produk Terpilih, Lintas Marketplace",
+    "heroTitle": "Produk Pilihan, Harga Terjangkau",
+    "heroSubtitle": "Kami cari, uji, dan pilih produk terbaik dari Shopee, Amazon, Temu, Tokopedia, dan Lazada — supaya Anda tidak perlu bingung lagi.",
+    "heroBannerDriveId": null,
+    "metaDescription": "KurasiNiche adalah tempat terbaik menemukan produk berkualitas yang sudah diuji dan dipilih oleh kurator kami.",
+    "ogImageDriveId": null,
+    "social": {
+      "tiktok": "https://tiktok.com/@kurasiniche",
+      "facebook": "https://facebook.com/kurasiniche",
+      "whatsapp": "https://wa.me/628123456789",
+      "email": "halo@kurasiniche.com"
+    },
+    "footer": {
+      "aboutText": "KurasiNiche lahir dari keresahan mencari produk berkualitas di tengah ribuan ulasan palsu. Kami menyeleksi dan menguji produk agar Anda tinggal pilih yang terbaik.",
+      "contactEmail": "halo@kurasiniche.com",
+      "affiliateDisclaimer": "Situs ini menggunakan tautan afiliasi. Kami mungkin menerima komisi jika Anda membeli produk melalui tautan kami, tanpa biaya tambahan bagi Anda.",
+      "policyLinks": [
+        {
+          "label": "Kebijakan Privasi",
+          "href": "/kebijakan-privasi"
+        },
+        {
+          "label": "Syarat & Ketentuan",
+          "href": "/disclaimer"
+        }
+      ]
+    }
+  },
+  "categories": [
+    {
+      "id": "cat-rumah",
+      "name": "Rumah & Dapur",
+      "slug": "rumah-dapur",
+      "icon": "Home",
+      "order": 1,
+      "subCategories": [
+        {
+          "id": "sub-lampu",
+          "name": "Lampu & Pencahayaan",
+          "slug": "lampu-pencahayaan"
+        },
+        {
+          "id": "sub-alat-masak",
+          "name": "Alat Masak",
+          "slug": "alat-masak"
+        },
+        {
+          "id": "sub-dekorasi",
+          "name": "Dekorasi",
+          "slug": "dekorasi"
+        }
+      ]
+    },
+    {
+      "id": "cat-gadget",
+      "name": "Gadget & Aksesoris",
+      "slug": "gadget-aksesoris",
+      "icon": "Smartphone",
+      "order": 2,
+      "subCategories": [
+        {
+          "id": "sub-audio",
+          "name": "Audio & Headphone",
+          "slug": "audio-headphone"
+        },
+        {
+          "id": "sub-charger",
+          "name": "Charger & Powerbank",
+          "slug": "charger-powerbank"
+        },
+        {
+          "id": "sub-wearable",
+          "name": "Wearables",
+          "slug": "wearables"
+        }
+      ]
+    },
+    {
+      "id": "cat-fashion",
+      "name": "Fashion Pria & Wanita",
+      "slug": "fashion",
+      "icon": "Shirt",
+      "order": 3,
+      "subCategories": [
+        {
+          "id": "sub-tas",
+          "name": "Tas & Dompet",
+          "slug": "tas-dompet"
+        },
+        {
+          "id": "sub-jam",
+          "name": "Jam Tangan",
+          "slug": "jam-tangan"
+        },
+        {
+          "id": "sub-aksesoris",
+          "name": "Aksesoris Fashion",
+          "slug": "aksesoris-fashion"
+        }
+      ]
+    }
+  ],
+  "products": [
+    {
+      "id": "prod-001",
+      "productNumber": "1",
+      "slug": "lampu-meja-led-minimalis-3-mode-1",
+      "name": "Lampu Meja LED Minimalis 3 Mode V1",
+      "categoryId": "cat-rumah",
+      "subCategoryId": "sub-lampu",
+      "price": 189000,
+      "originalPrice": 239000,
+      "currency": "IDR",
+      "rating": 4.7981185223765355,
+      "ratingCount": 380,
+      "shortDescription": "Produk berkualitas dari kategori cat-rumah. Sangat cocok untuk kebutuhan sehari-hari dengan desain modern.",
+      "curatorReview": "Kami sudah menguji produk ini secara langsung. Kualitas materialnya sangat baik dan sesuai dengan harga yang ditawarkan. Sangat direkomendasikan untuk Anda yang mencari keseimbangan antara harga dan fungsi.",
+      "specs": [
+        {
+          "label": "Warna",
+          "value": "Hitam"
+        },
+        {
+          "label": "Garansi",
+          "value": "1 Tahun"
+        },
+        {
+          "label": "Kondisi",
+          "value": "Baru"
+        }
+      ],
+      "images": [
+        {
+          "driveId": "1A2B3C4D5E6F7G8H9I0J",
+          "alt": "Gambar Produk Utama"
+        },
+        {
+          "driveId": "2B3C4D5E6F7G8H9I0J1K",
+          "alt": "Gambar Produk Samping"
+        }
+      ],
+      "videoDriveId": null,
+      "affiliateUrl": "https://shope.ee/abcXYZ123",
+      "marketplace": "shopee",
+      "badges": [
+        "Terlaris",
+        "Hemat Listrik"
+      ],
+      "isFeatured": true,
+      "status": "published",
+      "createdAt": "2026-09-30T04:14:39.626Z",
+      "updatedAt": "2026-09-30T04:14:39.626Z"
+    },
+    {
+      "id": "prod-002",
+      "productNumber": "2",
+      "slug": "wajan-anti-lengket-marble-2",
+      "name": "Wajan Anti Lengket Marble Coating V1",
+      "categoryId": "cat-rumah",
+      "subCategoryId": "sub-alat-masak",
+      "price": 255000,
+      "originalPrice": 305000,
+      "currency": "IDR",
+      "rating": 4.807372944970555,
+      "ratingCount": 493,
+      "shortDescription": "Produk berkualitas dari kategori cat-rumah. Sangat cocok untuk kebutuhan sehari-hari dengan desain modern.",
+      "curatorReview": "Kami sudah menguji produk ini secara langsung. Kualitas materialnya sangat baik dan sesuai dengan harga yang ditawarkan. Sangat direkomendasikan untuk Anda yang mencari keseimbangan antara harga dan fungsi.",
+      "specs": [
+        {
+          "label": "Warna",
+          "value": "Putih"
+        },
+        {
+          "label": "Garansi",
+          "value": "1 Tahun"
+        },
+        {
+          "label": "Kondisi",
+          "value": "Baru"
+        }
+      ],
+      "images": [
+        {
+          "driveId": "1A2B3C4D5E6F7G8H9I0J",
+          "alt": "Gambar Produk Utama"
+        },
+        {
+          "driveId": "2B3C4D5E6F7G8H9I0J1K",
+          "alt": "Gambar Produk Samping"
+        }
+      ],
+      "videoDriveId": null,
+      "affiliateUrl": "https://shope.ee/abcXYZ123",
+      "marketplace": "tokopedia",
+      "badges": [
+        "Premium",
+        "BPA Free"
+      ],
+      "isFeatured": true,
+      "status": "published",
+      "createdAt": "2026-09-30T04:14:39.627Z",
+      "updatedAt": "2026-09-30T04:14:39.627Z"
+    },
+    {
+      "id": "prod-003",
+      "productNumber": "3",
+      "slug": "rak-dinding-kayu-jati-3",
+      "name": "Rak Dinding Ambalan Kayu Jati V1",
+      "categoryId": "cat-rumah",
+      "subCategoryId": "sub-dekorasi",
+      "price": 130000,
+      "originalPrice": 180000,
+      "currency": "IDR",
+      "rating": 4.861326595216545,
+      "ratingCount": 761,
+      "shortDescription": "Produk berkualitas dari kategori cat-rumah. Sangat cocok untuk kebutuhan sehari-hari dengan desain modern.",
+      "curatorReview": "Kami sudah menguji produk ini secara langsung. Kualitas materialnya sangat baik dan sesuai dengan harga yang ditawarkan. Sangat direkomendasikan untuk Anda yang mencari keseimbangan antara harga dan fungsi.",
+      "specs": [
+        {
+          "label": "Warna",
+          "value": "Hitam"
+        },
+        {
+          "label": "Garansi",
+          "value": "1 Tahun"
+        },
+        {
+          "label": "Kondisi",
+          "value": "Baru"
+        }
+      ],
+      "images": [
+        {
+          "driveId": "1A2B3C4D5E6F7G8H9I0J",
+          "alt": "Gambar Produk Utama"
+        },
+        {
+          "driveId": "2B3C4D5E6F7G8H9I0J1K",
+          "alt": "Gambar Produk Samping"
+        }
+      ],
+      "videoDriveId": null,
+      "affiliateUrl": "https://shope.ee/abcXYZ123",
+      "marketplace": "lazada",
+      "badges": [
+        "Estetik",
+        "Lokal"
+      ],
+      "isFeatured": true,
+      "status": "published",
+      "createdAt": "2026-09-30T04:14:39.627Z",
+      "updatedAt": "2026-09-30T04:14:39.627Z"
+    },
+    {
+      "id": "prod-004",
+      "productNumber": "4",
+      "slug": "tws-earbuds-bluetooth-53-anc-4",
+      "name": "TWS Earbuds Bluetooth 5.3 ANC V1",
+      "categoryId": "cat-gadget",
+      "subCategoryId": "sub-audio",
+      "price": 414000,
+      "originalPrice": 464000,
+      "currency": "IDR",
+      "rating": 4.906301905597899,
+      "ratingCount": 561,
+      "shortDescription": "Produk berkualitas dari kategori cat-gadget. Sangat cocok untuk kebutuhan sehari-hari dengan desain modern.",
+      "curatorReview": "Kami sudah menguji produk ini secara langsung. Kualitas materialnya sangat baik dan sesuai dengan harga yang ditawarkan. Sangat direkomendasikan untuk Anda yang mencari keseimbangan antara harga dan fungsi.",
+      "specs": [
+        {
+          "label": "Warna",
+          "value": "Putih"
+        },
+        {
+          "label": "Garansi",
+          "value": "1 Tahun"
+        },
+        {
+          "label": "Kondisi",
+          "value": "Baru"
+        }
+      ],
+      "images": [
+        {
+          "driveId": "1A2B3C4D5E6F7G8H9I0J",
+          "alt": "Gambar Produk Utama"
+        },
+        {
+          "driveId": "2B3C4D5E6F7G8H9I0J1K",
+          "alt": "Gambar Produk Samping"
+        }
+      ],
+      "videoDriveId": null,
+      "affiliateUrl": "https://shope.ee/abcXYZ123",
+      "marketplace": "tokopedia",
+      "badges": [
+        "Rekomendasi",
+        "Audio Jernih"
+      ],
+      "isFeatured": true,
+      "status": "published",
+      "createdAt": "2026-09-30T04:14:39.627Z",
+      "updatedAt": "2026-09-30T04:14:39.627Z"
+    },
+    {
+      "id": "prod-005",
+      "productNumber": "5",
+      "slug": "charger-gan-65w-fast-charging-5",
+      "name": "Kepala Charger GaN 65W Fast Charging V1",
+      "categoryId": "cat-gadget",
+      "subCategoryId": "sub-charger",
+      "price": 235000,
+      "originalPrice": 285000,
+      "currency": "IDR",
+      "rating": 4.767896643472043,
+      "ratingCount": 930,
+      "shortDescription": "Produk berkualitas dari kategori cat-gadget. Sangat cocok untuk kebutuhan sehari-hari dengan desain modern.",
+      "curatorReview": "Kami sudah menguji produk ini secara langsung. Kualitas materialnya sangat baik dan sesuai dengan harga yang ditawarkan. Sangat direkomendasikan untuk Anda yang mencari keseimbangan antara harga dan fungsi.",
+      "specs": [
+        {
+          "label": "Warna",
+          "value": "Hitam"
+        },
+        {
+          "label": "Garansi",
+          "value": "1 Tahun"
+        },
+        {
+          "label": "Kondisi",
+          "value": "Baru"
+        }
+      ],
+      "images": [
+        {
+          "driveId": "1A2B3C4D5E6F7G8H9I0J",
+          "alt": "Gambar Produk Utama"
+        },
+        {
+          "driveId": "2B3C4D5E6F7G8H9I0J1K",
+          "alt": "Gambar Produk Samping"
+        }
+      ],
+      "videoDriveId": null,
+      "affiliateUrl": "https://shope.ee/abcXYZ123",
+      "marketplace": "shopee",
+      "badges": [
+        "Fast Charge",
+        "Ringkas"
+      ],
+      "isFeatured": true,
+      "status": "published",
+      "createdAt": "2026-09-30T04:14:39.627Z",
+      "updatedAt": "2026-09-30T04:14:39.627Z"
+    },
+    {
+      "id": "prod-006",
+      "productNumber": "6",
+      "slug": "smartwatch-fitness-amoled-6",
+      "name": "Smartwatch Fitness Tracker AMOLED V1",
+      "categoryId": "cat-gadget",
+      "subCategoryId": "sub-wearable",
+      "price": 574000,
+      "originalPrice": 624000,
+      "currency": "IDR",
+      "rating": 4.866745166165065,
+      "ratingCount": 130,
+      "shortDescription": "Produk berkualitas dari kategori cat-gadget. Sangat cocok untuk kebutuhan sehari-hari dengan desain modern.",
+      "curatorReview": "Kami sudah menguji produk ini secara langsung. Kualitas materialnya sangat baik dan sesuai dengan harga yang ditawarkan. Sangat direkomendasikan untuk Anda yang mencari keseimbangan antara harga dan fungsi.",
+      "specs": [
+        {
+          "label": "Warna",
+          "value": "Putih"
+        },
+        {
+          "label": "Garansi",
+          "value": "1 Tahun"
+        },
+        {
+          "label": "Kondisi",
+          "value": "Baru"
+        }
+      ],
+      "images": [
+        {
+          "driveId": "1A2B3C4D5E6F7G8H9I0J",
+          "alt": "Gambar Produk Utama"
+        },
+        {
+          "driveId": "2B3C4D5E6F7G8H9I0J1K",
+          "alt": "Gambar Produk Samping"
+        }
+      ],
+      "videoDriveId": null,
+      "affiliateUrl": "https://shope.ee/abcXYZ123",
+      "marketplace": "amazon",
+      "badges": [
+        "Layar Tajam",
+        "Tahan Air"
+      ],
+      "isFeatured": true,
+      "status": "published",
+      "createdAt": "2026-09-30T04:14:39.627Z",
+      "updatedAt": "2026-09-30T04:14:39.627Z"
+    },
+    {
+      "id": "prod-007",
+      "productNumber": "7",
+      "slug": "slingbag-kanvas-anti-air-7",
+      "name": "Slingbag Kanvas Anti Air V1",
+      "categoryId": "cat-fashion",
+      "subCategoryId": "sub-tas",
+      "price": 175000,
+      "originalPrice": 225000,
+      "currency": "IDR",
+      "rating": 4.6880245104053095,
+      "ratingCount": 821,
+      "shortDescription": "Produk berkualitas dari kategori cat-fashion. Sangat cocok untuk kebutuhan sehari-hari dengan desain modern.",
+      "curatorReview": "Kami sudah menguji produk ini secara langsung. Kualitas materialnya sangat baik dan sesuai dengan harga yang ditawarkan. Sangat direkomendasikan untuk Anda yang mencari keseimbangan antara harga dan fungsi.",
+      "specs": [
+        {
+          "label": "Warna",
+          "value": "Hitam"
+        },
+        {
+          "label": "Garansi",
+          "value": "1 Tahun"
+        },
+        {
+          "label": "Kondisi",
+          "value": "Baru"
+        }
+      ],
+      "images": [
+        {
+          "driveId": "1A2B3C4D5E6F7G8H9I0J",
+          "alt": "Gambar Produk Utama"
+        },
+        {
+          "driveId": "2B3C4D5E6F7G8H9I0J1K",
+          "alt": "Gambar Produk Samping"
+        }
+      ],
+      "videoDriveId": null,
+      "affiliateUrl": "https://shope.ee/abcXYZ123",
+      "marketplace": "shopee",
+      "badges": [
+        "Kasual",
+        "Waterproof"
+      ],
+      "isFeatured": false,
+      "status": "published",
+      "createdAt": "2026-09-30T04:14:39.627Z",
+      "updatedAt": "2026-09-30T04:14:39.627Z"
+    },
+    {
+      "id": "prod-008",
+      "productNumber": "8",
+      "slug": "jam-tangan-analog-minimalis-8",
+      "name": "Jam Tangan Analog Minimalis Pria V1",
+      "categoryId": "cat-fashion",
+      "subCategoryId": "sub-jam",
+      "price": 334000,
+      "originalPrice": 384000,
+      "currency": "IDR",
+      "rating": 4.913093119617189,
+      "ratingCount": 451,
+      "shortDescription": "Produk berkualitas dari kategori cat-fashion. Sangat cocok untuk kebutuhan sehari-hari dengan desain modern.",
+      "curatorReview": "Kami sudah menguji produk ini secara langsung. Kualitas materialnya sangat baik dan sesuai dengan harga yang ditawarkan. Sangat direkomendasikan untuk Anda yang mencari keseimbangan antara harga dan fungsi.",
+      "specs": [
+        {
+          "label": "Warna",
+          "value": "Putih"
+        },
+        {
+          "label": "Garansi",
+          "value": "1 Tahun"
+        },
+        {
+          "label": "Kondisi",
+          "value": "Baru"
+        }
+      ],
+      "images": [
+        {
+          "driveId": "1A2B3C4D5E6F7G8H9I0J",
+          "alt": "Gambar Produk Utama"
+        },
+        {
+          "driveId": "2B3C4D5E6F7G8H9I0J1K",
+          "alt": "Gambar Produk Samping"
+        }
+      ],
+      "videoDriveId": null,
+      "affiliateUrl": "https://shope.ee/abcXYZ123",
+      "marketplace": "tokopedia",
+      "badges": [
+        "Elegan",
+        "Klasik"
+      ],
+      "isFeatured": false,
+      "status": "published",
+      "createdAt": "2026-09-30T04:14:39.627Z",
+      "updatedAt": "2026-09-30T04:14:39.627Z"
+    },
+    {
+      "id": "prod-009",
+      "productNumber": "9",
+      "slug": "kacamata-hitam-polarized-uv400-9",
+      "name": "Kacamata Hitam Polarized UV400 V1",
+      "categoryId": "cat-fashion",
+      "subCategoryId": "sub-aksesoris",
+      "price": 135000,
+      "originalPrice": 185000,
+      "currency": "IDR",
+      "rating": 4.676274354134129,
+      "ratingCount": 249,
+      "shortDescription": "Produk berkualitas dari kategori cat-fashion. Sangat cocok untuk kebutuhan sehari-hari dengan desain modern.",
+      "curatorReview": "Kami sudah menguji produk ini secara langsung. Kualitas materialnya sangat baik dan sesuai dengan harga yang ditawarkan. Sangat direkomendasikan untuk Anda yang mencari keseimbangan antara harga dan fungsi.",
+      "specs": [
+        {
+          "label": "Warna",
+          "value": "Hitam"
+        },
+        {
+          "label": "Garansi",
+          "value": "1 Tahun"
+        },
+        {
+          "label": "Kondisi",
+          "value": "Baru"
+        }
+      ],
+      "images": [
+        {
+          "driveId": "1A2B3C4D5E6F7G8H9I0J",
+          "alt": "Gambar Produk Utama"
+        },
+        {
+          "driveId": "2B3C4D5E6F7G8H9I0J1K",
+          "alt": "Gambar Produk Samping"
+        }
+      ],
+      "videoDriveId": null,
+      "affiliateUrl": "https://shope.ee/abcXYZ123",
+      "marketplace": "temu",
+      "badges": [
+        "Outdoor",
+        "Trendy"
+      ],
+      "isFeatured": false,
+      "status": "published",
+      "createdAt": "2026-09-30T04:14:39.627Z",
+      "updatedAt": "2026-09-30T04:14:39.627Z"
+    },
+    {
+      "id": "prod-010",
+      "productNumber": "10",
+      "slug": "lampu-meja-led-minimalis-3-mode-10",
+      "name": "Lampu Meja LED Minimalis 3 Mode V2",
+      "categoryId": "cat-rumah",
+      "subCategoryId": "sub-lampu",
+      "price": 234000,
+      "originalPrice": 284000,
+      "currency": "IDR",
+      "rating": 4.8931343987601,
+      "ratingCount": 993,
+      "shortDescription": "Produk berkualitas dari kategori cat-rumah. Sangat cocok untuk kebutuhan sehari-hari dengan desain modern.",
+      "curatorReview": "Kami sudah menguji produk ini secara langsung. Kualitas materialnya sangat baik dan sesuai dengan harga yang ditawarkan. Sangat direkomendasikan untuk Anda yang mencari keseimbangan antara harga dan fungsi.",
+      "specs": [
+        {
+          "label": "Warna",
+          "value": "Putih"
+        },
+        {
+          "label": "Garansi",
+          "value": "1 Tahun"
+        },
+        {
+          "label": "Kondisi",
+          "value": "Baru"
+        }
+      ],
+      "images": [
+        {
+          "driveId": "1A2B3C4D5E6F7G8H9I0J",
+          "alt": "Gambar Produk Utama"
+        },
+        {
+          "driveId": "2B3C4D5E6F7G8H9I0J1K",
+          "alt": "Gambar Produk Samping"
+        }
+      ],
+      "videoDriveId": null,
+      "affiliateUrl": "https://shope.ee/abcXYZ123",
+      "marketplace": "shopee",
+      "badges": [
+        "Terlaris",
+        "Hemat Listrik"
+      ],
+      "isFeatured": false,
+      "status": "published",
+      "createdAt": "2026-09-30T04:14:39.627Z",
+      "updatedAt": "2026-09-30T04:14:39.627Z"
+    },
+    {
+      "id": "prod-011",
+      "productNumber": "11",
+      "slug": "wajan-anti-lengket-marble-11",
+      "name": "Wajan Anti Lengket Marble Coating V2",
+      "categoryId": "cat-rumah",
+      "subCategoryId": "sub-alat-masak",
+      "price": 300000,
+      "originalPrice": 350000,
+      "currency": "IDR",
+      "rating": 4.5507996784004465,
+      "ratingCount": 197,
+      "shortDescription": "Produk berkualitas dari kategori cat-rumah. Sangat cocok untuk kebutuhan sehari-hari dengan desain modern.",
+      "curatorReview": "Kami sudah menguji produk ini secara langsung. Kualitas materialnya sangat baik dan sesuai dengan harga yang ditawarkan. Sangat direkomendasikan untuk Anda yang mencari keseimbangan antara harga dan fungsi.",
+      "specs": [
+        {
+          "label": "Warna",
+          "value": "Hitam"
+        },
+        {
+          "label": "Garansi",
+          "value": "1 Tahun"
+        },
+        {
+          "label": "Kondisi",
+          "value": "Baru"
+        }
+      ],
+      "images": [
+        {
+          "driveId": "1A2B3C4D5E6F7G8H9I0J",
+          "alt": "Gambar Produk Utama"
+        },
+        {
+          "driveId": "2B3C4D5E6F7G8H9I0J1K",
+          "alt": "Gambar Produk Samping"
+        }
+      ],
+      "videoDriveId": null,
+      "affiliateUrl": "https://shope.ee/abcXYZ123",
+      "marketplace": "tokopedia",
+      "badges": [
+        "Premium",
+        "BPA Free"
+      ],
+      "isFeatured": false,
+      "status": "published",
+      "createdAt": "2026-09-30T04:14:39.627Z",
+      "updatedAt": "2026-09-30T04:14:39.627Z"
+    },
+    {
+      "id": "prod-012",
+      "productNumber": "12",
+      "slug": "rak-dinding-kayu-jati-12",
+      "name": "Rak Dinding Ambalan Kayu Jati V2",
+      "categoryId": "cat-rumah",
+      "subCategoryId": "sub-dekorasi",
+      "price": 175000,
+      "originalPrice": 225000,
+      "currency": "IDR",
+      "rating": 4.597536157862063,
+      "ratingCount": 432,
+      "shortDescription": "Produk berkualitas dari kategori cat-rumah. Sangat cocok untuk kebutuhan sehari-hari dengan desain modern.",
+      "curatorReview": "Kami sudah menguji produk ini secara langsung. Kualitas materialnya sangat baik dan sesuai dengan harga yang ditawarkan. Sangat direkomendasikan untuk Anda yang mencari keseimbangan antara harga dan fungsi.",
+      "specs": [
+        {
+          "label": "Warna",
+          "value": "Putih"
+        },
+        {
+          "label": "Garansi",
+          "value": "1 Tahun"
+        },
+        {
+          "label": "Kondisi",
+          "value": "Baru"
+        }
+      ],
+      "images": [
+        {
+          "driveId": "1A2B3C4D5E6F7G8H9I0J",
+          "alt": "Gambar Produk Utama"
+        },
+        {
+          "driveId": "2B3C4D5E6F7G8H9I0J1K",
+          "alt": "Gambar Produk Samping"
+        }
+      ],
+      "videoDriveId": null,
+      "affiliateUrl": "https://shope.ee/abcXYZ123",
+      "marketplace": "lazada",
+      "badges": [
+        "Estetik",
+        "Lokal"
+      ],
+      "isFeatured": false,
+      "status": "published",
+      "createdAt": "2026-09-30T04:14:39.627Z",
+      "updatedAt": "2026-09-30T04:14:39.627Z"
+    },
+    {
+      "id": "prod-013",
+      "productNumber": "13",
+      "slug": "tws-earbuds-bluetooth-53-anc-13",
+      "name": "TWS Earbuds Bluetooth 5.3 ANC V2",
+      "categoryId": "cat-gadget",
+      "subCategoryId": "sub-audio",
+      "price": 459000,
+      "originalPrice": 509000,
+      "currency": "IDR",
+      "rating": 4.938305113289922,
+      "ratingCount": 702,
+      "shortDescription": "Produk berkualitas dari kategori cat-gadget. Sangat cocok untuk kebutuhan sehari-hari dengan desain modern.",
+      "curatorReview": "Kami sudah menguji produk ini secara langsung. Kualitas materialnya sangat baik dan sesuai dengan harga yang ditawarkan. Sangat direkomendasikan untuk Anda yang mencari keseimbangan antara harga dan fungsi.",
+      "specs": [
+        {
+          "label": "Warna",
+          "value": "Hitam"
+        },
+        {
+          "label": "Garansi",
+          "value": "1 Tahun"
+        },
+        {
+          "label": "Kondisi",
+          "value": "Baru"
+        }
+      ],
+      "images": [
+        {
+          "driveId": "1A2B3C4D5E6F7G8H9I0J",
+          "alt": "Gambar Produk Utama"
+        },
+        {
+          "driveId": "2B3C4D5E6F7G8H9I0J1K",
+          "alt": "Gambar Produk Samping"
+        }
+      ],
+      "videoDriveId": null,
+      "affiliateUrl": "https://shope.ee/abcXYZ123",
+      "marketplace": "tokopedia",
+      "badges": [
+        "Rekomendasi",
+        "Audio Jernih"
+      ],
+      "isFeatured": false,
+      "status": "published",
+      "createdAt": "2026-09-30T04:14:39.627Z",
+      "updatedAt": "2026-09-30T04:14:39.627Z"
+    },
+    {
+      "id": "prod-014",
+      "productNumber": "14",
+      "slug": "charger-gan-65w-fast-charging-14",
+      "name": "Kepala Charger GaN 65W Fast Charging V2",
+      "categoryId": "cat-gadget",
+      "subCategoryId": "sub-charger",
+      "price": 280000,
+      "originalPrice": 330000,
+      "currency": "IDR",
+      "rating": 4.615483846553561,
+      "ratingCount": 134,
+      "shortDescription": "Produk berkualitas dari kategori cat-gadget. Sangat cocok untuk kebutuhan sehari-hari dengan desain modern.",
+      "curatorReview": "Kami sudah menguji produk ini secara langsung. Kualitas materialnya sangat baik dan sesuai dengan harga yang ditawarkan. Sangat direkomendasikan untuk Anda yang mencari keseimbangan antara harga dan fungsi.",
+      "specs": [
+        {
+          "label": "Warna",
+          "value": "Putih"
+        },
+        {
+          "label": "Garansi",
+          "value": "1 Tahun"
+        },
+        {
+          "label": "Kondisi",
+          "value": "Baru"
+        }
+      ],
+      "images": [
+        {
+          "driveId": "1A2B3C4D5E6F7G8H9I0J",
+          "alt": "Gambar Produk Utama"
+        },
+        {
+          "driveId": "2B3C4D5E6F7G8H9I0J1K",
+          "alt": "Gambar Produk Samping"
+        }
+      ],
+      "videoDriveId": null,
+      "affiliateUrl": "https://shope.ee/abcXYZ123",
+      "marketplace": "shopee",
+      "badges": [
+        "Fast Charge",
+        "Ringkas"
+      ],
+      "isFeatured": false,
+      "status": "published",
+      "createdAt": "2026-09-30T04:14:39.627Z",
+      "updatedAt": "2026-09-30T04:14:39.627Z"
+    },
+    {
+      "id": "prod-015",
+      "productNumber": "15",
+      "slug": "smartwatch-fitness-amoled-15",
+      "name": "Smartwatch Fitness Tracker AMOLED V2",
+      "categoryId": "cat-gadget",
+      "subCategoryId": "sub-wearable",
+      "price": 619000,
+      "originalPrice": 669000,
+      "currency": "IDR",
+      "rating": 4.747087675235492,
+      "ratingCount": 548,
+      "shortDescription": "Produk berkualitas dari kategori cat-gadget. Sangat cocok untuk kebutuhan sehari-hari dengan desain modern.",
+      "curatorReview": "Kami sudah menguji produk ini secara langsung. Kualitas materialnya sangat baik dan sesuai dengan harga yang ditawarkan. Sangat direkomendasikan untuk Anda yang mencari keseimbangan antara harga dan fungsi.",
+      "specs": [
+        {
+          "label": "Warna",
+          "value": "Hitam"
+        },
+        {
+          "label": "Garansi",
+          "value": "1 Tahun"
+        },
+        {
+          "label": "Kondisi",
+          "value": "Baru"
+        }
+      ],
+      "images": [
+        {
+          "driveId": "1A2B3C4D5E6F7G8H9I0J",
+          "alt": "Gambar Produk Utama"
+        },
+        {
+          "driveId": "2B3C4D5E6F7G8H9I0J1K",
+          "alt": "Gambar Produk Samping"
+        }
+      ],
+      "videoDriveId": null,
+      "affiliateUrl": "https://shope.ee/abcXYZ123",
+      "marketplace": "amazon",
+      "badges": [
+        "Layar Tajam",
+        "Tahan Air"
+      ],
+      "isFeatured": false,
+      "status": "published",
+      "createdAt": "2026-09-30T04:14:39.627Z",
+      "updatedAt": "2026-09-30T04:14:39.627Z"
+    },
+    {
+      "id": "prod-016",
+      "productNumber": "16",
+      "slug": "slingbag-kanvas-anti-air-16",
+      "name": "Slingbag Kanvas Anti Air V2",
+      "categoryId": "cat-fashion",
+      "subCategoryId": "sub-tas",
+      "price": 220000,
+      "originalPrice": 270000,
+      "currency": "IDR",
+      "rating": 4.652311879218754,
+      "ratingCount": 437,
+      "shortDescription": "Produk berkualitas dari kategori cat-fashion. Sangat cocok untuk kebutuhan sehari-hari dengan desain modern.",
+      "curatorReview": "Kami sudah menguji produk ini secara langsung. Kualitas materialnya sangat baik dan sesuai dengan harga yang ditawarkan. Sangat direkomendasikan untuk Anda yang mencari keseimbangan antara harga dan fungsi.",
+      "specs": [
+        {
+          "label": "Warna",
+          "value": "Putih"
+        },
+        {
+          "label": "Garansi",
+          "value": "1 Tahun"
+        },
+        {
+          "label": "Kondisi",
+          "value": "Baru"
+        }
+      ],
+      "images": [
+        {
+          "driveId": "1A2B3C4D5E6F7G8H9I0J",
+          "alt": "Gambar Produk Utama"
+        },
+        {
+          "driveId": "2B3C4D5E6F7G8H9I0J1K",
+          "alt": "Gambar Produk Samping"
+        }
+      ],
+      "videoDriveId": null,
+      "affiliateUrl": "https://shope.ee/abcXYZ123",
+      "marketplace": "shopee",
+      "badges": [
+        "Kasual",
+        "Waterproof"
+      ],
+      "isFeatured": false,
+      "status": "published",
+      "createdAt": "2026-09-30T04:14:39.627Z",
+      "updatedAt": "2026-09-30T04:14:39.627Z"
+    },
+    {
+      "id": "prod-017",
+      "productNumber": "17",
+      "slug": "jam-tangan-analog-minimalis-17",
+      "name": "Jam Tangan Analog Minimalis Pria V2",
+      "categoryId": "cat-fashion",
+      "subCategoryId": "sub-jam",
+      "price": 379000,
+      "originalPrice": 429000,
+      "currency": "IDR",
+      "rating": 4.552229048854056,
+      "ratingCount": 666,
+      "shortDescription": "Produk berkualitas dari kategori cat-fashion. Sangat cocok untuk kebutuhan sehari-hari dengan desain modern.",
+      "curatorReview": "Kami sudah menguji produk ini secara langsung. Kualitas materialnya sangat baik dan sesuai dengan harga yang ditawarkan. Sangat direkomendasikan untuk Anda yang mencari keseimbangan antara harga dan fungsi.",
+      "specs": [
+        {
+          "label": "Warna",
+          "value": "Hitam"
+        },
+        {
+          "label": "Garansi",
+          "value": "1 Tahun"
+        },
+        {
+          "label": "Kondisi",
+          "value": "Baru"
+        }
+      ],
+      "images": [
+        {
+          "driveId": "1A2B3C4D5E6F7G8H9I0J",
+          "alt": "Gambar Produk Utama"
+        },
+        {
+          "driveId": "2B3C4D5E6F7G8H9I0J1K",
+          "alt": "Gambar Produk Samping"
+        }
+      ],
+      "videoDriveId": null,
+      "affiliateUrl": "https://shope.ee/abcXYZ123",
+      "marketplace": "tokopedia",
+      "badges": [
+        "Elegan",
+        "Klasik"
+      ],
+      "isFeatured": false,
+      "status": "published",
+      "createdAt": "2026-09-30T04:14:39.627Z",
+      "updatedAt": "2026-09-30T04:14:39.627Z"
+    },
+    {
+      "id": "prod-018",
+      "productNumber": "18",
+      "slug": "kacamata-hitam-polarized-uv400-18",
+      "name": "Kacamata Hitam Polarized UV400 V2",
+      "categoryId": "cat-fashion",
+      "subCategoryId": "sub-aksesoris",
+      "price": 180000,
+      "originalPrice": 230000,
+      "currency": "IDR",
+      "rating": 4.739307508160301,
+      "ratingCount": 761,
+      "shortDescription": "Produk berkualitas dari kategori cat-fashion. Sangat cocok untuk kebutuhan sehari-hari dengan desain modern.",
+      "curatorReview": "Kami sudah menguji produk ini secara langsung. Kualitas materialnya sangat baik dan sesuai dengan harga yang ditawarkan. Sangat direkomendasikan untuk Anda yang mencari keseimbangan antara harga dan fungsi.",
+      "specs": [
+        {
+          "label": "Warna",
+          "value": "Putih"
+        },
+        {
+          "label": "Garansi",
+          "value": "1 Tahun"
+        },
+        {
+          "label": "Kondisi",
+          "value": "Baru"
+        }
+      ],
+      "images": [
+        {
+          "driveId": "1A2B3C4D5E6F7G8H9I0J",
+          "alt": "Gambar Produk Utama"
+        },
+        {
+          "driveId": "2B3C4D5E6F7G8H9I0J1K",
+          "alt": "Gambar Produk Samping"
+        }
+      ],
+      "videoDriveId": null,
+      "affiliateUrl": "https://shope.ee/abcXYZ123",
+      "marketplace": "temu",
+      "badges": [
+        "Outdoor",
+        "Trendy"
+      ],
+      "isFeatured": false,
+      "status": "published",
+      "createdAt": "2026-09-30T04:14:39.627Z",
+      "updatedAt": "2026-09-30T04:14:39.627Z"
+    },
+    {
+      "id": "prod-019",
+      "productNumber": "19",
+      "slug": "lampu-meja-led-minimalis-3-mode-19",
+      "name": "Lampu Meja LED Minimalis 3 Mode V3",
+      "categoryId": "cat-rumah",
+      "subCategoryId": "sub-lampu",
+      "price": 279000,
+      "originalPrice": 329000,
+      "currency": "IDR",
+      "rating": 4.569691353810845,
+      "ratingCount": 818,
+      "shortDescription": "Produk berkualitas dari kategori cat-rumah. Sangat cocok untuk kebutuhan sehari-hari dengan desain modern.",
+      "curatorReview": "Kami sudah menguji produk ini secara langsung. Kualitas materialnya sangat baik dan sesuai dengan harga yang ditawarkan. Sangat direkomendasikan untuk Anda yang mencari keseimbangan antara harga dan fungsi.",
+      "specs": [
+        {
+          "label": "Warna",
+          "value": "Hitam"
+        },
+        {
+          "label": "Garansi",
+          "value": "1 Tahun"
+        },
+        {
+          "label": "Kondisi",
+          "value": "Baru"
+        }
+      ],
+      "images": [
+        {
+          "driveId": "1A2B3C4D5E6F7G8H9I0J",
+          "alt": "Gambar Produk Utama"
+        },
+        {
+          "driveId": "2B3C4D5E6F7G8H9I0J1K",
+          "alt": "Gambar Produk Samping"
+        }
+      ],
+      "videoDriveId": null,
+      "affiliateUrl": "https://shope.ee/abcXYZ123",
+      "marketplace": "shopee",
+      "badges": [
+        "Terlaris",
+        "Hemat Listrik"
+      ],
+      "isFeatured": false,
+      "status": "published",
+      "createdAt": "2026-09-30T04:14:39.627Z",
+      "updatedAt": "2026-09-30T04:14:39.627Z"
+    },
+    {
+      "id": "prod-020",
+      "productNumber": "20",
+      "slug": "wajan-anti-lengket-marble-20",
+      "name": "Wajan Anti Lengket Marble Coating V3",
+      "categoryId": "cat-rumah",
+      "subCategoryId": "sub-alat-masak",
+      "price": 345000,
+      "originalPrice": 395000,
+      "currency": "IDR",
+      "rating": 4.743210528811089,
+      "ratingCount": 544,
+      "shortDescription": "Produk berkualitas dari kategori cat-rumah. Sangat cocok untuk kebutuhan sehari-hari dengan desain modern.",
+      "curatorReview": "Kami sudah menguji produk ini secara langsung. Kualitas materialnya sangat baik dan sesuai dengan harga yang ditawarkan. Sangat direkomendasikan untuk Anda yang mencari keseimbangan antara harga dan fungsi.",
+      "specs": [
+        {
+          "label": "Warna",
+          "value": "Putih"
+        },
+        {
+          "label": "Garansi",
+          "value": "1 Tahun"
+        },
+        {
+          "label": "Kondisi",
+          "value": "Baru"
+        }
+      ],
+      "images": [
+        {
+          "driveId": "1A2B3C4D5E6F7G8H9I0J",
+          "alt": "Gambar Produk Utama"
+        },
+        {
+          "driveId": "2B3C4D5E6F7G8H9I0J1K",
+          "alt": "Gambar Produk Samping"
+        }
+      ],
+      "videoDriveId": null,
+      "affiliateUrl": "https://shope.ee/abcXYZ123",
+      "marketplace": "tokopedia",
+      "badges": [
+        "Premium",
+        "BPA Free"
+      ],
+      "isFeatured": false,
+      "status": "published",
+      "createdAt": "2026-09-30T04:14:39.627Z",
+      "updatedAt": "2026-09-30T04:14:39.627Z"
+    },
+    {
+      "id": "prod-021",
+      "productNumber": "21",
+      "slug": "rak-dinding-kayu-jati-21",
+      "name": "Rak Dinding Ambalan Kayu Jati V3",
+      "categoryId": "cat-rumah",
+      "subCategoryId": "sub-dekorasi",
+      "price": 220000,
+      "originalPrice": 270000,
+      "currency": "IDR",
+      "rating": 4.782039199650232,
+      "ratingCount": 631,
+      "shortDescription": "Produk berkualitas dari kategori cat-rumah. Sangat cocok untuk kebutuhan sehari-hari dengan desain modern.",
+      "curatorReview": "Kami sudah menguji produk ini secara langsung. Kualitas materialnya sangat baik dan sesuai dengan harga yang ditawarkan. Sangat direkomendasikan untuk Anda yang mencari keseimbangan antara harga dan fungsi.",
+      "specs": [
+        {
+          "label": "Warna",
+          "value": "Hitam"
+        },
+        {
+          "label": "Garansi",
+          "value": "1 Tahun"
+        },
+        {
+          "label": "Kondisi",
+          "value": "Baru"
+        }
+      ],
+      "images": [
+        {
+          "driveId": "1A2B3C4D5E6F7G8H9I0J",
+          "alt": "Gambar Produk Utama"
+        },
+        {
+          "driveId": "2B3C4D5E6F7G8H9I0J1K",
+          "alt": "Gambar Produk Samping"
+        }
+      ],
+      "videoDriveId": null,
+      "affiliateUrl": "https://shope.ee/abcXYZ123",
+      "marketplace": "lazada",
+      "badges": [
+        "Estetik",
+        "Lokal"
+      ],
+      "isFeatured": false,
+      "status": "published",
+      "createdAt": "2026-09-30T04:14:39.627Z",
+      "updatedAt": "2026-09-30T04:14:39.627Z"
+    },
+    {
+      "id": "prod-022",
+      "productNumber": "22",
+      "slug": "tws-earbuds-bluetooth-53-anc-22",
+      "name": "TWS Earbuds Bluetooth 5.3 ANC V3",
+      "categoryId": "cat-gadget",
+      "subCategoryId": "sub-audio",
+      "price": 504000,
+      "originalPrice": 554000,
+      "currency": "IDR",
+      "rating": 4.9754749508881195,
+      "ratingCount": 125,
+      "shortDescription": "Produk berkualitas dari kategori cat-gadget. Sangat cocok untuk kebutuhan sehari-hari dengan desain modern.",
+      "curatorReview": "Kami sudah menguji produk ini secara langsung. Kualitas materialnya sangat baik dan sesuai dengan harga yang ditawarkan. Sangat direkomendasikan untuk Anda yang mencari keseimbangan antara harga dan fungsi.",
+      "specs": [
+        {
+          "label": "Warna",
+          "value": "Putih"
+        },
+        {
+          "label": "Garansi",
+          "value": "1 Tahun"
+        },
+        {
+          "label": "Kondisi",
+          "value": "Baru"
+        }
+      ],
+      "images": [
+        {
+          "driveId": "1A2B3C4D5E6F7G8H9I0J",
+          "alt": "Gambar Produk Utama"
+        },
+        {
+          "driveId": "2B3C4D5E6F7G8H9I0J1K",
+          "alt": "Gambar Produk Samping"
+        }
+      ],
+      "videoDriveId": null,
+      "affiliateUrl": "https://shope.ee/abcXYZ123",
+      "marketplace": "tokopedia",
+      "badges": [
+        "Rekomendasi",
+        "Audio Jernih"
+      ],
+      "isFeatured": false,
+      "status": "published",
+      "createdAt": "2026-09-30T04:14:39.627Z",
+      "updatedAt": "2026-09-30T04:14:39.627Z"
+    },
+    {
+      "id": "prod-023",
+      "productNumber": "23",
+      "slug": "charger-gan-65w-fast-charging-23",
+      "name": "Kepala Charger GaN 65W Fast Charging V3",
+      "categoryId": "cat-gadget",
+      "subCategoryId": "sub-charger",
+      "price": 325000,
+      "originalPrice": 375000,
+      "currency": "IDR",
+      "rating": 4.730223328231851,
+      "ratingCount": 177,
+      "shortDescription": "Produk berkualitas dari kategori cat-gadget. Sangat cocok untuk kebutuhan sehari-hari dengan desain modern.",
+      "curatorReview": "Kami sudah menguji produk ini secara langsung. Kualitas materialnya sangat baik dan sesuai dengan harga yang ditawarkan. Sangat direkomendasikan untuk Anda yang mencari keseimbangan antara harga dan fungsi.",
+      "specs": [
+        {
+          "label": "Warna",
+          "value": "Hitam"
+        },
+        {
+          "label": "Garansi",
+          "value": "1 Tahun"
+        },
+        {
+          "label": "Kondisi",
+          "value": "Baru"
+        }
+      ],
+      "images": [
+        {
+          "driveId": "1A2B3C4D5E6F7G8H9I0J",
+          "alt": "Gambar Produk Utama"
+        },
+        {
+          "driveId": "2B3C4D5E6F7G8H9I0J1K",
+          "alt": "Gambar Produk Samping"
+        }
+      ],
+      "videoDriveId": null,
+      "affiliateUrl": "https://shope.ee/abcXYZ123",
+      "marketplace": "shopee",
+      "badges": [
+        "Fast Charge",
+        "Ringkas"
+      ],
+      "isFeatured": false,
+      "status": "published",
+      "createdAt": "2026-09-30T04:14:39.627Z",
+      "updatedAt": "2026-09-30T04:14:39.627Z"
+    },
+    {
+      "id": "prod-024",
+      "productNumber": "24",
+      "slug": "smartwatch-fitness-amoled-24",
+      "name": "Smartwatch Fitness Tracker AMOLED V3",
+      "categoryId": "cat-gadget",
+      "subCategoryId": "sub-wearable",
+      "price": 664000,
+      "originalPrice": 714000,
+      "currency": "IDR",
+      "rating": 4.874828926334926,
+      "ratingCount": 812,
+      "shortDescription": "Produk berkualitas dari kategori cat-gadget. Sangat cocok untuk kebutuhan sehari-hari dengan desain modern.",
+      "curatorReview": "Kami sudah menguji produk ini secara langsung. Kualitas materialnya sangat baik dan sesuai dengan harga yang ditawarkan. Sangat direkomendasikan untuk Anda yang mencari keseimbangan antara harga dan fungsi.",
+      "specs": [
+        {
+          "label": "Warna",
+          "value": "Putih"
+        },
+        {
+          "label": "Garansi",
+          "value": "1 Tahun"
+        },
+        {
+          "label": "Kondisi",
+          "value": "Baru"
+        }
+      ],
+      "images": [
+        {
+          "driveId": "1A2B3C4D5E6F7G8H9I0J",
+          "alt": "Gambar Produk Utama"
+        },
+        {
+          "driveId": "2B3C4D5E6F7G8H9I0J1K",
+          "alt": "Gambar Produk Samping"
+        }
+      ],
+      "videoDriveId": null,
+      "affiliateUrl": "https://shope.ee/abcXYZ123",
+      "marketplace": "amazon",
+      "badges": [
+        "Layar Tajam",
+        "Tahan Air"
+      ],
+      "isFeatured": false,
+      "status": "published",
+      "createdAt": "2026-09-30T04:14:39.627Z",
+      "updatedAt": "2026-09-30T04:14:39.627Z"
+    }
+  ],
+  "revisions": []
+}
