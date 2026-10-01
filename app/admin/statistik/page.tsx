@@ -12,7 +12,7 @@ export default async function AdminStatistikPage() {
   });
 
   const products = getProducts();
-  const clickData = [];
+  const clickData: { id: string, name: string, clicks: number }[] = [];
   let totalClicksAllTime = 0;
 
   // Fetch click counts for all products
@@ -37,7 +37,7 @@ export default async function AdminStatistikPage() {
   const topProducts = clickData.slice(0, 10);
 
   // Fetch daily clicks for the last 7 days
-  const dailyClicks = [];
+  const dailyClicks: { date: string, clicks: number }[] = [];
   for (let i = 6; i >= 0; i--) {
     const d = new Date();
     d.setDate(d.getDate() - i);
