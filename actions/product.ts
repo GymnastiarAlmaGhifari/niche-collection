@@ -25,18 +25,20 @@ export async function addProductAction(productData: any) {
       marketplace: productData.marketplace,
       price: parseInt(productData.price),
       originalPrice: productData.originalPrice ? parseInt(productData.originalPrice) : undefined,
+      currency: "IDR",
       rating: 5.0,
       ratingCount: 1,
-      soldCount: 10,
       affiliateUrl: productData.affiliateUrl,
+      specs: [],
       images: [
-        { driveId: productData.mainImageId, isPrimary: true }
+        { driveId: productData.mainImageId, alt: productData.name }
       ],
       videoDriveId: productData.videoId || undefined,
       shortDescription: productData.shortDescription,
       curatorReview: productData.curatorReview,
       status: productData.status,
       badges: ["Baru"],
+      isFeatured: false,
       createdAt: new Date().toISOString(),
       updatedAt: new Date().toISOString(),
     };

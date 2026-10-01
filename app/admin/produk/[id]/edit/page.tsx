@@ -26,8 +26,8 @@ export default function EditProductPage({ params }: { params: Promise<{ id: stri
   const [affiliateUrl, setAffiliateUrl] = useState(product?.affiliateUrl || "");
   const [price, setPrice] = useState(product?.price?.toString() || "");
   const [originalPrice, setOriginalPrice] = useState(product?.originalPrice?.toString() || "");
-  const [status, setStatus] = useState(product?.status || "published");
-  const [marketplace, setMarketplace] = useState(product?.marketplace || "shopee");
+  const [status, setStatus] = useState<string>(product?.status || "published");
+  const [marketplace, setMarketplace] = useState<string>(product?.marketplace || "shopee");
   const [mainImageId, setMainImageId] = useState(product?.images[0]?.driveId || "");
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -49,7 +49,7 @@ export default function EditProductPage({ params }: { params: Promise<{ id: stri
       originalPrice: originalPrice ? parseInt(originalPrice) : undefined,
       status,
       marketplace,
-      images: [{ driveId: mainImageId, isPrimary: true }]
+      images: [{ driveId: mainImageId, alt: name }]
     });
 
     setLoading(false);
