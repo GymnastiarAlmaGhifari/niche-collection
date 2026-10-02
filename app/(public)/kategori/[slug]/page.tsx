@@ -4,14 +4,15 @@ import { notFound } from "next/navigation";
 
 export default async function KategoriPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
-  const categories = getCategories();
+  const categories = await getCategories();
   const category = categories.find(c => c.slug === slug);
   
   if (!category) {
     notFound();
   }
 
-  const products = getPublishedProducts().filter(p => p.categoryId === category.id);
+  const allProducts = await getPublishedProducts();
+  const products = allProducts.filter(p => p.categoryId === category.id);
 
   return (
     <div className="container mx-auto px-4 py-8">

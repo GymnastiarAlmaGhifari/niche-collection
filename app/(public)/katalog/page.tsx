@@ -1,9 +1,9 @@
 import { getPublishedProducts, getCategories } from "@/lib/data";
 import { CatalogClient } from "./catalog-client";
 
-export default function KatalogPage() {
-  const products = getPublishedProducts();
-  const categories = getCategories();
+export default async function KatalogPage() {
+  const products = await getPublishedProducts();
+  const categories = await getCategories();
 
   return (
     <div className="container mx-auto px-4 py-8">

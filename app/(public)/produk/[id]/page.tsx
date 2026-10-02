@@ -7,7 +7,7 @@ import { ProductGallery } from "./product-gallery";
 
 export default async function ProductPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
-  const product = getProductBySlug(id);
+  const product = await getProductBySlug(id);
 
   if (!product || product.status !== 'published') {
     notFound();

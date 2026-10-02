@@ -1,16 +1,26 @@
 "use client";
 import Link from "next/link";
-import { Search, Heart, LayoutGrid, List, Globe } from "lucide-react";
+import { Search, Heart, LayoutGrid, List, Globe, Loader2 } from "lucide-react";
 import { useUIStore } from "@/store/ui-store";
 import { useLangStore } from "@/store/lang-store";
 import { getCategories, getConfig } from "@/lib/data";
 import { Button } from "./ui/button";
+import { useState, useEffect } from "react";
+import { Category } from "@/types/catalog";
 
 export function Header() {
   const { viewMode, toggleViewMode } = useUIStore();
   const { lang, toggleLang } = useLangStore();
-  const config = getConfig();
-  const categories = getCategories();
+  
+  const [config, setConfig] = useState<any>({ siteName: "Niche Collection" });
+  const [categories, setCategories] = useState<Category[]>([]);
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+    getConfig().then(setConfig);
+    getCategories().then(setCategories);
+  }, []);
 
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">

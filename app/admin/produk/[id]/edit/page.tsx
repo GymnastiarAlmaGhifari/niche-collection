@@ -1,37 +1,66 @@
 "use client";
-import { useState, use } from "react";
+import { useState, useEffect, use } from "react";
 import { useRouter } from "next/navigation";
-import { ArrowLeft, Save, Info } from "lucide-react";
+import { ArrowLeft, Save, Info, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent } from "@/components/ui/card";
 import Link from "next/link";
 import { toast } from "sonner";
-import { getProductBySlug, getCategories } from "@/lib/data";
+import { getProductById, getCategories } from "@/lib/data";
 import { editProductAction } from "@/actions/product";
+import { Product, Category } from "@/types/catalog";
 
 export default function EditProductPage({ params }: { params: Promise<{ id: string }> }) {
   const router = useRouter();
   const { id } = use(params);
   const [loading, setLoading] = useState(false);
-  const categories = getCategories();
-
-  const product = getProductBySlug(id);
+  const [initialLoad, setInitialLoad] = useState(true);
+  
+  const [product, setProduct] = useState<Product | null>(null);
+  const [categories, setCategories] = useState<Category[]>([]);
 
   // Form State
-  const [productNumber, setProductNumber] = useState(product?.productNumber || "");
-  const [name, setName] = useState(product?.name || "");
-  const [shortDescription, setShortDescription] = useState(product?.shortDescription || "");
-  const [curatorReview, setCuratorReview] = useState(product?.curatorReview || "");
-  const [affiliateUrl, setAffiliateUrl] = useState(product?.affiliateUrl || "");
-  const [price, setPrice] = useState(product?.price?.toString() || "");
-  const [originalPrice, setOriginalPrice] = useState(product?.originalPrice?.toString() || "");
-  const [status, setStatus] = useState<string>(product?.status || "published");
-  const [marketplace, setMarketplace] = useState<string>(product?.marketplace || "shopee");
-  const [mainImageId, setMainImageId] = useState(product?.images[0]?.driveId || "");
-  const [videoId, setVideoId] = useState(product?.videoDriveId || "");
-  const [categoryId, setCategoryId] = useState(product?.categoryId || categories[0]?.id || "");
-  const [subCategoryId, setSubCategoryId] = useState(product?.subCategoryId || "");
+  const [productNumber, setProductNumber] = useState("");
+  const [name, setName] = useState("");
+  const [shortDescription, setShortDescription] = useState("");
+  const [curatorReview, setCuratorReview] = useState("");
+  const [affiliateUrl, setAffiliateUrl] = useState("");
+  const [price, setPrice] = useState("");
+  const [originalPrice, setOriginalPrice] = useState("");
+  const [status, setStatus] = useState("published");
+  const [marketplace, setMarketplace] = useState("shopee");
+  const [mainImageId, setMainImageId] = useState("");
+  const [videoId, setVideoId] = useState("");
+  const [categoryId, setCategoryId] = useState("");
+  const [subCategoryId, setSubCategoryId] = useState("");
+
+  useEffect(() => {
+    Promise.all([
+      getProductById(id),
+      getCategories()
+    ]).then(([p, cats]) => {
+      setProduct(p || null);
+      setCategories(cats);
+      
+      if (p) {
+        setProductNumber(p.productNumber);
+        setName(p.name);
+        setShortDescription(p.shortDescription || "");
+        setCuratorReview(p.curatorReview || "");
+        setAffiliateUrl(p.affiliateUrl);
+        setPrice(p.price?.toString() || "");
+        setOriginalPrice(p.originalPrice?.toString() || "");
+        setStatus(p.status || "published");
+        setMarketplace(p.marketplace || "shopee");
+        setMainImageId(p.images?.[0]?.driveId || "");
+        setVideoId(p.videoDriveId || "");
+        setCategoryId(p.categoryId || cats[0]?.id || "");
+        setSubCategoryId(p.subCategoryId || "");
+      }
+      setInitialLoad(false);
+    });
+  }, [id]);
 
   const selectedCategory = categories.find(c => c.id === categoryId);
 
@@ -47,7 +76,6 @@ export default function EditProductPage({ params }: { params: Promise<{ id: stri
     const res = await editProductAction(product.id, {
       productNumber,
       name,
-      slug: name.toLowerCase().replace(/[^a-z0-9]+/g, '-'),
       shortDescription,
       curatorReview,
       affiliateUrl,
@@ -65,7 +93,7 @@ export default function EditProductPage({ params }: { params: Promise<{ id: stri
 
     if (res.success) {
       toast.success("Produk berhasil diperbarui!", {
-        description: "Data tersimpan ke GitHub & auto-deploy sedang berjalan."
+        description: "Data tersimpan ke Supabase."
       });
       router.push("/admin/produk");
       router.refresh();
@@ -75,6 +103,10 @@ export default function EditProductPage({ params }: { params: Promise<{ id: stri
       });
     }
   };
+
+  if (initialLoad) {
+    return <div className="flex justify-center p-20"><Loader2 className="animate-spin text-muted-foreground w-8 h-8" /></div>;
+  }
 
   if (!product) {
     return (
@@ -182,12 +214,12 @@ export default function EditProductPage({ params }: { params: Promise<{ id: stri
                     ))}
                   </select>
                 </div>
-                {selectedCategory && selectedCategory.subCategories.length > 0 && (
+                {selectedCategory && selectedCategory.subCategories && selectedCategory.subCategories.length > 0 && (
                   <div className="space-y-2">
                     <label className="text-sm font-medium">Sub-Kategori</label>
                     <select className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm" value={subCategoryId} onChange={e=>setSubCategoryId(e.target.value)}>
                       <option value="">-- Pilih --</option>
-                      {selectedCategory.subCategories.map(s => (
+                      {selectedCategory.subCategories.map((s: any) => (
                         <option key={s.id} value={s.id}>{s.name}</option>
                       ))}
                     </select>
@@ -195,7 +227,7 @@ export default function EditProductPage({ params }: { params: Promise<{ id: stri
                 )}
                 <Button type="submit" className="w-full" disabled={loading}>
                   <Save className="mr-2 h-4 w-4" /> 
-                  {loading ? "Menyimpan ke GitHub..." : "Simpan & Deploy"}
+                  {loading ? "Menyimpan ke Database..." : "Simpan & Deploy"}
                 </Button>
               </CardContent>
             </Card>

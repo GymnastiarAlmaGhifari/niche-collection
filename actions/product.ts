@@ -1,80 +1,48 @@
 "use server";
 
-import { getCatalogFile, updateCatalogFile } from "@/lib/github";
+import { supabaseAdmin } from "@/lib/supabase";
 import { Product } from "@/types/catalog";
-import fs from "fs/promises";
-import path from "path";
-
-// In a fully static remote-only app, we rely strictly on GitHub as source of truth.
-// But during local development or Vercel runtime, the Next.js API can also update the local file directly if needed,
-// though pushing to GitHub triggers Vercel redeploy which is the pure Git CMS way.
-
-async function triggerVercelDeploy() {
-  const hookUrl = process.env.VERCEL_DEPLOY_HOOK_URL;
-  if (!hookUrl) return;
-  try {
-    await fetch(hookUrl, { method: "POST" });
-    console.log("Vercel deployment triggered.");
-  } catch (error) {
-    console.error("Failed to trigger Vercel deployment:", error);
-  }
-}
+import { revalidatePath } from "next/cache";
 
 export async function addProductAction(productData: any) {
   try {
-    const file = await getCatalogFile();
-    if (!file) throw new Error("Could not fetch catalog from GitHub");
+    const id = `prod-${Date.now()}`;
+    const slug = productData.name.toLowerCase().replace(/[^a-z0-9]+/g, '-');
 
-    // Add new product
-    const newProduct: Product = {
-      id: `prod-${Date.now()}`,
-      slug: productData.name.toLowerCase().replace(/[^a-z0-9]+/g, '-'),
-      productNumber: productData.productNumber,
+    const { error } = await supabaseAdmin.from('products').insert({
+      id,
+      slug,
+      product_number: productData.productNumber,
       name: productData.name,
-      categoryId: productData.categoryId || "home",
-      subCategoryId: productData.subCategoryId || "decor",
+      category_id: productData.categoryId || "home",
+      sub_category_id: productData.subCategoryId || null,
       marketplace: productData.marketplace,
       price: productData.price ? parseInt(productData.price) : null,
-      originalPrice: productData.originalPrice ? parseInt(productData.originalPrice) : null,
+      original_price: productData.originalPrice ? parseInt(productData.originalPrice) : null,
       currency: "IDR",
       rating: 5.0,
-      ratingCount: 1,
-      affiliateUrl: productData.affiliateUrl,
-      specs: [],
-      images: [
-        { driveId: productData.mainImageId, alt: productData.name }
-      ],
-      videoDriveId: productData.videoId || undefined,
-      shortDescription: productData.shortDescription,
-      curatorReview: productData.curatorReview,
+      rating_count: 1,
+      affiliate_url: productData.affiliateUrl,
+      short_description: productData.shortDescription,
+      curator_review: productData.curatorReview,
       status: productData.status,
-      badges: ["Baru"],
-      isFeatured: false,
-      createdAt: new Date().toISOString(),
-      updatedAt: new Date().toISOString(),
-    };
+      is_featured: false,
+      video_drive_id: productData.videoId || null,
+      badges: ["Baru"]
+    });
 
-    file.content.products.unshift(newProduct); // Add to top
+    if (error) throw error;
 
-    // Update GitHub
-    const res = await updateCatalogFile(
-      file.content, 
-      file.sha, 
-      `Add product: ${newProduct.name}`
-    );
-
-    if (!res.success) {
-      throw new Error("Failed to commit to GitHub");
+    if (productData.mainImageId) {
+      await supabaseAdmin.from('product_images').insert({
+        product_id: id,
+        drive_id: productData.mainImageId,
+        alt: productData.name,
+        sort_order: 0
+      });
     }
 
-    // Also update local file during development so we don't have to wait for redeploy
-    if (process.env.NODE_ENV === "development") {
-      const localPath = path.join(process.cwd(), "data", "catalog.json");
-      await fs.writeFile(localPath, JSON.stringify(file.content, null, 2));
-    }
-
-    await triggerVercelDeploy();
-
+    revalidatePath('/', 'layout');
     return { success: true };
   } catch (error: any) {
     console.error("Action Error:", error);
@@ -84,38 +52,46 @@ export async function addProductAction(productData: any) {
 
 export async function editProductAction(id: string, productData: any) {
   try {
-    const file = await getCatalogFile();
-    if (!file) throw new Error("Could not fetch catalog from GitHub");
+    const { error } = await supabaseAdmin.from('products').update({
+      slug: productData.slug || productData.name.toLowerCase().replace(/[^a-z0-9]+/g, '-'),
+      product_number: productData.productNumber,
+      name: productData.name,
+      category_id: productData.categoryId || "home",
+      sub_category_id: productData.subCategoryId || null,
+      marketplace: productData.marketplace,
+      price: productData.price ? parseInt(productData.price) : null,
+      original_price: productData.originalPrice ? parseInt(productData.originalPrice) : null,
+      affiliate_url: productData.affiliateUrl,
+      short_description: productData.shortDescription,
+      curator_review: productData.curatorReview,
+      status: productData.status,
+      video_drive_id: productData.videoDriveId || null,
+      updated_at: new Date().toISOString(),
+    }).eq('id', id);
 
-    const index = file.content.products.findIndex((p: Product) => p.id === id);
-    if (index === -1) throw new Error("Product not found");
+    if (error) throw error;
 
-    // Update existing
-    const existing = file.content.products[index];
-    file.content.products[index] = {
-      ...existing,
-      ...productData,
-      updatedAt: new Date().toISOString(),
-    };
-
-    // Update GitHub
-    const res = await updateCatalogFile(
-      file.content, 
-      file.sha, 
-      `Update product: ${existing.name}`
-    );
-
-    if (!res.success) {
-      throw new Error("Failed to commit to GitHub");
+    // Update main image if provided in images[0]
+    if (productData.images && productData.images.length > 0) {
+      // For simplicity, just update the first image or insert if not exists
+      const { data: existingImages } = await supabaseAdmin.from('product_images').select('id').eq('product_id', id).order('sort_order', { ascending: true }).limit(1);
+      
+      if (existingImages && existingImages.length > 0) {
+        await supabaseAdmin.from('product_images').update({
+          drive_id: productData.images[0].driveId,
+          alt: productData.images[0].alt
+        }).eq('id', existingImages[0].id);
+      } else {
+        await supabaseAdmin.from('product_images').insert({
+          product_id: id,
+          drive_id: productData.images[0].driveId,
+          alt: productData.images[0].alt,
+          sort_order: 0
+        });
+      }
     }
 
-    if (process.env.NODE_ENV === "development") {
-      const localPath = path.join(process.cwd(), "data", "catalog.json");
-      await fs.writeFile(localPath, JSON.stringify(file.content, null, 2));
-    }
-
-    await triggerVercelDeploy();
-
+    revalidatePath('/', 'layout');
     return { success: true };
   } catch (error: any) {
     console.error("Action Error:", error);
@@ -125,32 +101,10 @@ export async function editProductAction(id: string, productData: any) {
 
 export async function deleteProductAction(id: string) {
   try {
-    const file = await getCatalogFile();
-    if (!file) throw new Error("Could not fetch catalog from GitHub");
-
-    const product = file.content.products.find((p: Product) => p.id === id);
-    if (!product) throw new Error("Product not found");
-
-    file.content.products = file.content.products.filter((p: Product) => p.id !== id);
-
-    // Update GitHub
-    const res = await updateCatalogFile(
-      file.content, 
-      file.sha, 
-      `Delete product: ${product.name}`
-    );
-
-    if (!res.success) {
-      throw new Error("Failed to commit to GitHub");
-    }
-
-    if (process.env.NODE_ENV === "development") {
-      const localPath = path.join(process.cwd(), "data", "catalog.json");
-      await fs.writeFile(localPath, JSON.stringify(file.content, null, 2));
-    }
-
-    await triggerVercelDeploy();
-
+    const { error } = await supabaseAdmin.from('products').delete().eq('id', id);
+    if (error) throw error;
+    
+    revalidatePath('/', 'layout');
     return { success: true };
   } catch (error: any) {
     console.error("Action Error:", error);

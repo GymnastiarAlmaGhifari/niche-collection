@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import { Plus, Search, Edit, Trash2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -9,15 +9,19 @@ import { getProducts } from "@/lib/data";
 import { deleteProductAction } from "@/actions/product";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
+import { Product } from "@/types/catalog";
 
 export default function AdminProdukPage() {
-  const [products, setProducts] = useState(getProducts());
+  const [products, setProducts] = useState<Product[]>([]);
   const [search, setSearch] = useState("");
+  const [loading, setLoading] = useState<string | null>(null);
+  const router = useRouter();
+
+  useEffect(() => {
+    getProducts().then(setProducts);
+  }, []);
 
   const filtered = products.filter(p => p.name.toLowerCase().includes(search.toLowerCase()));
-
-  const router = useRouter();
-  const [loading, setLoading] = useState<string | null>(null);
 
   const handleDelete = async (id: string) => {
     if (confirm("Apakah Anda yakin ingin menghapus produk ini?")) {
@@ -26,7 +30,7 @@ export default function AdminProdukPage() {
       setLoading(null);
       if (res.success) {
         setProducts(products.filter(p => p.id !== id));
-        toast.success("Produk dihapus", { description: "Perubahan disave ke GitHub" });
+        toast.success("Produk dihapus", { description: "Terhapus dari database" });
         router.refresh();
       } else {
         toast.error("Gagal menghapus", { description: res.error });
@@ -39,7 +43,7 @@ export default function AdminProdukPage() {
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
         <div>
           <h1 className="text-3xl font-bold tracking-tight">Kelola Produk</h1>
-          <p className="text-muted-foreground mt-1">Tambah, edit, atau hapus produk dari katalog.</p>
+          <p className="text-muted-foreground mt-1">Tambah, edit, atau hapus produk dari database.</p>
         </div>
         <Link href="/admin/produk/baru">
           <Button>

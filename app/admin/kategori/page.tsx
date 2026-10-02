@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { getCategories } from "@/lib/data";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -8,10 +8,15 @@ import { Plus, GripVertical, Edit, Trash2, Check, X } from "lucide-react";
 import { addCategoryAction, editCategoryAction, deleteCategoryAction, addSubCategoryAction, deleteSubCategoryAction } from "@/actions/category";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
+import { Category } from "@/types/catalog";
 
 export default function AdminKategoriPage() {
-  const [categories, setCategories] = useState(getCategories());
+  const [categories, setCategories] = useState<Category[]>([]);
   const router = useRouter();
+
+  useEffect(() => {
+    getCategories().then(setCategories);
+  }, []);
 
   // State for adding new category
   const [showAddForm, setShowAddForm] = useState(false);
@@ -31,16 +36,14 @@ export default function AdminKategoriPage() {
   const handleAddCategory = async () => {
     if (!newCatName.trim()) return;
     setAddingCat(true);
-    const res = await addCategoryAction({ name: newCatName, icon: newCatIcon });
+    const res = await addCategoryAction(newCatName, newCatIcon);
     setAddingCat(false);
     if (res.success) {
       toast.success("Kategori ditambahkan!");
       setNewCatName("");
       setNewCatIcon("Package");
       setShowAddForm(false);
-      router.refresh();
-      // Reload categories from data
-      window.location.reload();
+      getCategories().then(setCategories);
     } else {
       toast.error("Gagal menambah kategori", { description: res.error });
     }
@@ -48,11 +51,11 @@ export default function AdminKategoriPage() {
 
   const handleEditCategory = async (id: string) => {
     if (!editCatName.trim()) return;
-    const res = await editCategoryAction(id, { name: editCatName, icon: editCatIcon });
+    const res = await editCategoryAction(id, editCatName, editCatIcon);
     if (res.success) {
       toast.success("Kategori diperbarui!");
       setEditingCatId(null);
-      window.location.reload();
+      getCategories().then(setCategories);
     } else {
       toast.error("Gagal mengedit kategori", { description: res.error });
     }
@@ -71,12 +74,12 @@ export default function AdminKategoriPage() {
 
   const handleAddSubCategory = async (categoryId: string) => {
     if (!newSubName.trim()) return;
-    const res = await addSubCategoryAction(categoryId, { name: newSubName });
+    const res = await addSubCategoryAction(categoryId, newSubName);
     if (res.success) {
       toast.success("Sub-kategori ditambahkan!");
       setNewSubName("");
       setAddingSubTo(null);
-      window.location.reload();
+      getCategories().then(setCategories);
     } else {
       toast.error("Gagal menambah sub-kategori", { description: res.error });
     }
@@ -87,7 +90,7 @@ export default function AdminKategoriPage() {
     const res = await deleteSubCategoryAction(categoryId, subId);
     if (res.success) {
       toast.success("Sub-kategori dihapus!");
-      window.location.reload();
+      getCategories().then(setCategories);
     } else {
       toast.error("Gagal menghapus", { description: res.error });
     }
@@ -151,7 +154,7 @@ export default function AdminKategoriPage() {
                   <CardTitle className="text-lg flex items-center gap-2">
                     {cat.name}
                     <span className="text-xs font-normal text-muted-foreground bg-muted px-2 py-0.5 rounded-full">
-                      {cat.subCategories.length} Sub-kategori
+                      {cat.subCategories?.length || 0} Sub-kategori
                     </span>
                   </CardTitle>
                 )}
@@ -183,7 +186,7 @@ export default function AdminKategoriPage() {
             </CardHeader>
             <CardContent className="p-4 pl-12">
               <div className="space-y-2">
-                {cat.subCategories.map((sub) => (
+                {cat.subCategories?.map((sub) => (
                   <div key={sub.id} className="flex items-center gap-3 p-2 rounded-md hover:bg-muted/50 border border-transparent hover:border-border">
                     <div className="cursor-grab text-muted-foreground/50 hover:text-foreground">
                       <GripVertical className="h-4 w-4" />

@@ -3,11 +3,12 @@ import { ArrowRight } from "lucide-react";
 import { getConfig, getCategories, getFeaturedProducts } from "@/lib/data";
 import { Button } from "@/components/ui/button";
 import { ProductCard } from "@/components/product-card";
+import { Badge } from "@/components/ui/badge";
 
-export default function Home() {
-  const config = getConfig();
-  const categories = getCategories();
-  const featuredProducts = getFeaturedProducts();
+export default async function Home() {
+  const config = await getConfig();
+  const categories = await getCategories();
+  const featuredProducts = await getFeaturedProducts();
 
   return (
     <div className="animate-in fade-in duration-500">
@@ -36,7 +37,7 @@ export default function Home() {
       <section className="py-16 container mx-auto px-4">
         <h2 className="font-heading text-2xl font-bold mb-8 text-center">Jelajahi Kategori</h2>
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-          {categories.map((cat) => (
+          {categories.map((cat: any) => (
             <Link key={cat.id} href={`/kategori/${cat.slug}`}>
               <div className="p-6 rounded-2xl bg-card border hover:border-primary/50 hover:shadow-md transition-all text-center group cursor-pointer h-full flex flex-col items-center justify-center gap-3">
                 <div className="w-12 h-12 rounded-full bg-accent text-primary flex items-center justify-center group-hover:scale-110 transition-transform">
@@ -63,7 +64,7 @@ export default function Home() {
           </div>
           
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 md:gap-6">
-            {featuredProducts.slice(0, 5).map(product => (
+            {featuredProducts.slice(0, 5).map((product: any) => (
               <ProductCard key={product.id} product={product} />
             ))}
           </div>
@@ -80,6 +81,3 @@ export default function Home() {
     </div>
   );
 }
-
-// Need to import Badge, wait, let's just use Badge component from shadcn
-import { Badge } from "@/components/ui/badge";

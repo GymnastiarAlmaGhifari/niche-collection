@@ -13,9 +13,10 @@ export default function FavoritPage() {
 
   useEffect(() => {
     setMounted(true);
-    const allProducts = getPublishedProducts();
-    const filtered = allProducts.filter(p => favorites.includes(p.id));
-    setFavoriteProducts(filtered);
+    getPublishedProducts().then(allProducts => {
+      const filtered = allProducts.filter(p => favorites.includes(p.id));
+      setFavoriteProducts(filtered);
+    });
   }, [favorites]);
 
   if (!mounted) return null; // Avoid hydration mismatch

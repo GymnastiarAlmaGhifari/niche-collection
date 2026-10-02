@@ -9,7 +9,7 @@ const redis = new Redis({
 
 export async function GET(request: Request, { params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
-  const product = getProductBySlug(id);
+  const product = await getProductBySlug(id);
 
   if (!product) {
     return NextResponse.redirect(new URL("/", request.url));

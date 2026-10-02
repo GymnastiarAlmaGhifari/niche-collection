@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { ArrowLeft, Save, Info } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -9,11 +9,16 @@ import Link from "next/link";
 import { toast } from "sonner";
 import { addProductAction } from "@/actions/product";
 import { getCategories } from "@/lib/data";
+import { Category } from "@/types/catalog";
 
 export default function AddProductPage() {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
-  const categories = getCategories();
+  const [categories, setCategories] = useState<Category[]>([]);
+
+  useEffect(() => {
+    getCategories().then(setCategories);
+  }, []);
 
   // Form State
   const [productNumber, setProductNumber] = useState("");
@@ -27,8 +32,14 @@ export default function AddProductPage() {
   const [marketplace, setMarketplace] = useState("shopee");
   const [mainImageId, setMainImageId] = useState("");
   const [videoId, setVideoId] = useState("");
-  const [categoryId, setCategoryId] = useState(categories[0]?.id || "");
+  const [categoryId, setCategoryId] = useState("");
   const [subCategoryId, setSubCategoryId] = useState("");
+
+  useEffect(() => {
+    if (categories.length > 0 && !categoryId) {
+      setCategoryId(categories[0].id);
+    }
+  }, [categories, categoryId]);
 
   const selectedCategory = categories.find(c => c.id === categoryId);
 
@@ -56,7 +67,7 @@ export default function AddProductPage() {
 
     if (res.success) {
       toast.success("Produk berhasil ditambahkan!", {
-        description: "Data tersimpan ke GitHub & auto-deploy sedang berjalan."
+        description: "Data tersimpan ke Supabase."
       });
       router.push("/admin/produk");
       router.refresh();
@@ -163,12 +174,12 @@ export default function AddProductPage() {
                     ))}
                   </select>
                 </div>
-                {selectedCategory && selectedCategory.subCategories.length > 0 && (
+                {selectedCategory && selectedCategory.subCategories && selectedCategory.subCategories.length > 0 && (
                   <div className="space-y-2">
                     <label className="text-sm font-medium">Sub-Kategori</label>
                     <select className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm" value={subCategoryId} onChange={e=>setSubCategoryId(e.target.value)}>
                       <option value="">-- Pilih --</option>
-                      {selectedCategory.subCategories.map(s => (
+                      {selectedCategory.subCategories.map((s: any) => (
                         <option key={s.id} value={s.id}>{s.name}</option>
                       ))}
                     </select>
@@ -176,7 +187,7 @@ export default function AddProductPage() {
                 )}
                 <Button type="submit" className="w-full" disabled={loading}>
                   <Save className="mr-2 h-4 w-4" /> 
-                  {loading ? "Menyimpan ke GitHub..." : "Simpan & Deploy"}
+                  {loading ? "Menyimpan ke Database..." : "Simpan & Deploy"}
                 </Button>
               </CardContent>
             </Card>

@@ -11,7 +11,7 @@ export default async function AdminStatistikPage() {
     token: process.env.UPSTASH_REDIS_REST_TOKEN!,
   });
 
-  const products = getProducts();
+  const products = await getProducts();
   const clickData: { id: string, name: string, clicks: number }[] = [];
   let totalClicksAllTime = 0;
 

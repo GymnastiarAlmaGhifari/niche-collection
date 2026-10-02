@@ -6,7 +6,7 @@ import { Redis } from "@upstash/redis";
 export const revalidate = 0; // Disable cache
 
 export default async function AdminDashboard() {
-  const products = getProducts();
+  const products = await getProducts();
   const publishedCount = products.filter(p => p.status === 'published').length;
   const draftCount = products.filter(p => p.status === 'draft').length;
 

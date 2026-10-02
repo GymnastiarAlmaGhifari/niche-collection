@@ -1,24 +1,40 @@
 "use client";
+import { useState, useEffect } from "react";
 import { getProducts } from "@/lib/data";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { ImageIcon, Video, ExternalLink } from "lucide-react";
+import { Card, CardContent } from "@/components/ui/card";
+import { ImageIcon, Video, ExternalLink, Loader2 } from "lucide-react";
+import { Product } from "@/types/catalog";
 
 export default function AdminMediaPage() {
-  const products = getProducts();
+  const [products, setProducts] = useState<Product[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    getProducts().then(data => {
+      setProducts(data);
+      setLoading(false);
+    });
+  }, []);
 
   // Collect all media (images + videos) from products
   const mediaItems: { productName: string; type: "image" | "video"; driveId: string; alt: string }[] = [];
 
   products.forEach((p) => {
-    p.images.forEach((img) => {
-      if (img.driveId) {
-        mediaItems.push({ productName: p.name, type: "image", driveId: img.driveId, alt: img.alt });
-      }
-    });
+    if (p.images) {
+      p.images.forEach((img) => {
+        if (img.driveId) {
+          mediaItems.push({ productName: p.name, type: "image", driveId: img.driveId, alt: img.alt });
+        }
+      });
+    }
     if (p.videoDriveId) {
       mediaItems.push({ productName: p.name, type: "video", driveId: p.videoDriveId, alt: `Video ${p.name}` });
     }
   });
+
+  if (loading) {
+    return <div className="flex justify-center p-20"><Loader2 className="animate-spin text-muted-foreground w-8 h-8" /></div>;
+  }
 
   return (
     <div className="space-y-6">

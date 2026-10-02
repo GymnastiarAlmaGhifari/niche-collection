@@ -1,8 +1,8 @@
 import Link from "next/link";
 import { getConfig } from "@/lib/data";
 
-export function Footer() {
-  const config = getConfig();
+export async function Footer() {
+  const config = await getConfig();
 
   return (
     <footer className="border-t bg-card mt-16">
@@ -30,7 +30,7 @@ export function Footer() {
           <div>
             <h4 className="font-semibold mb-4">Kebijakan</h4>
             <ul className="space-y-2 text-sm text-muted-foreground">
-              {config.footer.policyLinks.map((link, i) => (
+              {config.footer?.policyLinks?.map((link: any, i: number) => (
                 <li key={i}><Link href={link.href} className="hover:text-primary">{link.label}</Link></li>
               ))}
             </ul>

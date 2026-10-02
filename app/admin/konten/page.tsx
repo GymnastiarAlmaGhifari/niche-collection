@@ -3,21 +3,30 @@ import { getConfig } from "@/lib/data";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Save } from "lucide-react";
+import { Save, Loader2 } from "lucide-react";
 import { toast } from "sonner";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 export default function AdminKontenPage() {
-  const [config, setConfig] = useState(getConfig());
+  const [config, setConfig] = useState<any>(null);
   const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    getConfig().then(setConfig);
+  }, []);
 
   const handleSave = () => {
     setLoading(true);
+    // TODO: implement action
     setTimeout(() => {
       setLoading(false);
-      toast.success("Konfigurasi berhasil disimpan");
+      toast.success("Fitur simpan konfigurasi ke DB belum diimplementasi sepenuhnya.");
     }, 1000);
   };
+
+  if (!config) {
+    return <div className="flex justify-center p-20"><Loader2 className="animate-spin text-muted-foreground w-8 h-8" /></div>;
+  }
 
   return (
     <div className="space-y-6">
@@ -39,21 +48,21 @@ export default function AdminKontenPage() {
           <CardContent className="space-y-4">
             <div className="space-y-2">
               <label className="text-sm font-medium">Nama Situs</label>
-              <Input value={config.siteName} onChange={(e) => setConfig({...config, siteName: e.target.value})} />
+              <Input value={config.siteName || ""} onChange={(e) => setConfig({...config, siteName: e.target.value})} />
             </div>
             <div className="space-y-2">
               <label className="text-sm font-medium">Tagline / Badge</label>
-              <Input value={config.tagline} onChange={(e) => setConfig({...config, tagline: e.target.value})} />
+              <Input value={config.tagline || ""} onChange={(e) => setConfig({...config, tagline: e.target.value})} />
             </div>
             <div className="space-y-2">
               <label className="text-sm font-medium">Hero Title</label>
-              <Input value={config.heroTitle} onChange={(e) => setConfig({...config, heroTitle: e.target.value})} />
+              <Input value={config.heroTitle || ""} onChange={(e) => setConfig({...config, heroTitle: e.target.value})} />
             </div>
             <div className="space-y-2">
               <label className="text-sm font-medium">Hero Subtitle</label>
               <textarea 
                 className="flex min-h-[80px] w-full rounded-md border border-input bg-background px-3 py-2 text-sm"
-                value={config.heroSubtitle}
+                value={config.heroSubtitle || ""}
                 onChange={(e) => setConfig({...config, heroSubtitle: e.target.value})}
               />
             </div>
@@ -70,7 +79,7 @@ export default function AdminKontenPage() {
                 <label className="text-sm font-medium">Tentang Kami (Footer)</label>
                 <textarea 
                   className="flex min-h-[80px] w-full rounded-md border border-input bg-background px-3 py-2 text-sm"
-                  value={config.footer.aboutText}
+                  value={config.footer?.aboutText || ""}
                   onChange={(e) => setConfig({...config, footer: {...config.footer, aboutText: e.target.value}})}
                 />
               </div>
@@ -78,7 +87,7 @@ export default function AdminKontenPage() {
                 <label className="text-sm font-medium">Disclaimer Afiliasi</label>
                 <textarea 
                   className="flex min-h-[60px] w-full rounded-md border border-input bg-background px-3 py-2 text-sm"
-                  value={config.footer.affiliateDisclaimer}
+                  value={config.footer?.affiliateDisclaimer || ""}
                   onChange={(e) => setConfig({...config, footer: {...config.footer, affiliateDisclaimer: e.target.value}})}
                 />
               </div>
