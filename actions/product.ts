@@ -9,6 +9,17 @@ import path from "path";
 // But during local development or Vercel runtime, the Next.js API can also update the local file directly if needed,
 // though pushing to GitHub triggers Vercel redeploy which is the pure Git CMS way.
 
+async function triggerVercelDeploy() {
+  const hookUrl = process.env.VERCEL_DEPLOY_HOOK_URL;
+  if (!hookUrl) return;
+  try {
+    await fetch(hookUrl, { method: "POST" });
+    console.log("Vercel deployment triggered.");
+  } catch (error) {
+    console.error("Failed to trigger Vercel deployment:", error);
+  }
+}
+
 export async function addProductAction(productData: any) {
   try {
     const file = await getCatalogFile();
@@ -62,6 +73,8 @@ export async function addProductAction(productData: any) {
       await fs.writeFile(localPath, JSON.stringify(file.content, null, 2));
     }
 
+    await triggerVercelDeploy();
+
     return { success: true };
   } catch (error: any) {
     console.error("Action Error:", error);
@@ -101,6 +114,8 @@ export async function editProductAction(id: string, productData: any) {
       await fs.writeFile(localPath, JSON.stringify(file.content, null, 2));
     }
 
+    await triggerVercelDeploy();
+
     return { success: true };
   } catch (error: any) {
     console.error("Action Error:", error);
@@ -133,6 +148,8 @@ export async function deleteProductAction(id: string) {
       const localPath = path.join(process.cwd(), "data", "catalog.json");
       await fs.writeFile(localPath, JSON.stringify(file.content, null, 2));
     }
+
+    await triggerVercelDeploy();
 
     return { success: true };
   } catch (error: any) {
