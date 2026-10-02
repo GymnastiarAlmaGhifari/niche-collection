@@ -8,10 +8,12 @@ import { Card, CardContent } from "@/components/ui/card";
 import Link from "next/link";
 import { toast } from "sonner";
 import { addProductAction } from "@/actions/product";
+import { getCategories } from "@/lib/data";
 
 export default function AddProductPage() {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
+  const categories = getCategories();
 
   // Form State
   const [productNumber, setProductNumber] = useState("");
@@ -24,6 +26,11 @@ export default function AddProductPage() {
   const [status, setStatus] = useState("published");
   const [marketplace, setMarketplace] = useState("shopee");
   const [mainImageId, setMainImageId] = useState("");
+  const [videoId, setVideoId] = useState("");
+  const [categoryId, setCategoryId] = useState(categories[0]?.id || "");
+  const [subCategoryId, setSubCategoryId] = useState("");
+
+  const selectedCategory = categories.find(c => c.id === categoryId);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -39,14 +46,17 @@ export default function AddProductPage() {
       originalPrice,
       status,
       marketplace,
-      mainImageId
+      mainImageId,
+      videoId,
+      categoryId,
+      subCategoryId,
     });
 
     setLoading(false);
 
     if (res.success) {
-      toast.success("Produk berhasil ditambahkan", {
-        description: "Commit telah dibuat dan auto-deploy sedang berjalan."
+      toast.success("Produk berhasil ditambahkan!", {
+        description: "Data tersimpan ke GitHub & auto-deploy sedang berjalan."
       });
       router.push("/admin/produk");
       router.refresh();
@@ -108,16 +118,16 @@ export default function AddProductPage() {
             <Card>
               <CardContent className="pt-6 space-y-4">
                 <div className="space-y-2">
-                  <label className="text-sm font-medium">Link Afiliasi & Harga</label>
+                  <label className="text-sm font-medium">Link Afiliasi</label>
                   <Input placeholder="https://shope.ee/..." required type="url" value={affiliateUrl} onChange={e=>setAffiliateUrl(e.target.value)} />
                 </div>
                 <div className="grid grid-cols-2 gap-4">
                   <div className="space-y-2">
-                    <label className="text-sm font-medium">Harga Jual (Rp)</label>
+                    <label className="text-sm font-medium">Harga Jual (Rp) <span className="text-xs text-muted-foreground">— Opsional</span></label>
                     <Input placeholder="150000" type="number" value={price} onChange={e=>setPrice(e.target.value)} />
                   </div>
                   <div className="space-y-2">
-                    <label className="text-sm font-medium">Harga Coret (Rp)</label>
+                    <label className="text-sm font-medium">Harga Coret (Rp) <span className="text-xs text-muted-foreground">— Opsional</span></label>
                     <Input placeholder="200000" type="number" value={originalPrice} onChange={e=>setOriginalPrice(e.target.value)} />
                   </div>
                 </div>
@@ -145,6 +155,25 @@ export default function AddProductPage() {
                     <option value="temu">Temu</option>
                   </select>
                 </div>
+                <div className="space-y-2">
+                  <label className="text-sm font-medium">Kategori</label>
+                  <select className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm" value={categoryId} onChange={e => { setCategoryId(e.target.value); setSubCategoryId(""); }}>
+                    {categories.map(c => (
+                      <option key={c.id} value={c.id}>{c.name}</option>
+                    ))}
+                  </select>
+                </div>
+                {selectedCategory && selectedCategory.subCategories.length > 0 && (
+                  <div className="space-y-2">
+                    <label className="text-sm font-medium">Sub-Kategori</label>
+                    <select className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm" value={subCategoryId} onChange={e=>setSubCategoryId(e.target.value)}>
+                      <option value="">-- Pilih --</option>
+                      {selectedCategory.subCategories.map(s => (
+                        <option key={s.id} value={s.id}>{s.name}</option>
+                      ))}
+                    </select>
+                  </div>
+                )}
                 <Button type="submit" className="w-full" disabled={loading}>
                   <Save className="mr-2 h-4 w-4" /> 
                   {loading ? "Menyimpan ke GitHub..." : "Simpan & Deploy"}
@@ -156,14 +185,18 @@ export default function AddProductPage() {
               <CardContent className="pt-6 space-y-4">
                 <div className="flex items-center gap-2 mb-2">
                   <Info className="h-5 w-5 text-primary" />
-                  <label className="text-sm font-medium">Upload Media (Google Drive)</label>
+                  <label className="text-sm font-medium">Media (Google Drive)</label>
                 </div>
-                <p className="text-xs text-muted-foreground mb-4">
-                  Situs ini 100% statis. Anda harus meng-upload gambar secara manual ke <strong>Google Drive</strong> Anda dengan akses <em>"Anyone with the link can view"</em>.
+                <p className="text-xs text-muted-foreground mb-2">
+                  Upload gambar ke <strong>Google Drive</strong> dengan akses <em>"Anyone with the link"</em>, lalu salin ID-nya.
                 </p>
                 <div className="space-y-2">
                   <label className="text-xs font-semibold">ID Gambar Utama</label>
-                  <Input placeholder="1A2B3C4D5E6F7G8H9I0J" required value={mainImageId} onChange={e=>setMainImageId(e.target.value)} />
+                  <Input placeholder="1A2B3C4D..." value={mainImageId} onChange={e=>setMainImageId(e.target.value)} />
+                </div>
+                <div className="space-y-2">
+                  <label className="text-xs font-semibold">ID Video (Opsional)</label>
+                  <Input placeholder="ID Google Drive video" value={videoId} onChange={e=>setVideoId(e.target.value)} />
                 </div>
               </CardContent>
             </Card>

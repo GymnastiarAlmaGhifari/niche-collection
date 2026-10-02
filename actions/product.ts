@@ -31,8 +31,8 @@ export async function addProductAction(productData: any) {
       slug: productData.name.toLowerCase().replace(/[^a-z0-9]+/g, '-'),
       productNumber: productData.productNumber,
       name: productData.name,
-      categoryId: "home", // hardcoded for demo or passed from form
-      subCategoryId: "decor", // hardcoded for demo
+      categoryId: productData.categoryId || "home",
+      subCategoryId: productData.subCategoryId || "decor",
       marketplace: productData.marketplace,
       price: productData.price ? parseInt(productData.price) : null,
       originalPrice: productData.originalPrice ? parseInt(productData.originalPrice) : null,
