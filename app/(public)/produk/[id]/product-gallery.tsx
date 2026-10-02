@@ -37,11 +37,18 @@ export function ProductGallery({ images }: { images: ProductImage[] }) {
         <div className="flex h-full">
           {images.map((img, i) => (
             <div className="flex-[0_0_100%] min-w-0 relative h-full flex items-center justify-center bg-card" key={i}>
-              {/* Dummy Image logic */}
-              <div className="text-muted-foreground text-sm flex flex-col items-center">
-                <span>Gambar {i + 1}</span>
-                <span className="text-xs mt-2">ID: {img.driveId.substring(0, 8)}...</span>
-              </div>
+              {img.driveId ? (
+                <img 
+                  src={`https://drive.google.com/thumbnail?id=${img.driveId}&sz=w800`} 
+                  alt={img.alt || `Gambar ${i + 1}`}
+                  className="absolute inset-0 w-full h-full object-contain"
+                  loading={i === 0 ? "eager" : "lazy"}
+                />
+              ) : (
+                <div className="text-muted-foreground text-sm flex flex-col items-center">
+                  <span>No Image</span>
+                </div>
+              )}
             </div>
           ))}
         </div>

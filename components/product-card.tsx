@@ -31,9 +31,16 @@ export function ProductCard({ product }: { product: Product }) {
           </div>
           <CardContent className="p-0 flex flex-col sm:flex-row h-full">
             <div className="relative w-full sm:w-48 h-48 bg-muted shrink-0">
-              <div className="absolute inset-0 flex items-center justify-center text-muted-foreground text-xs">
-                IMG: {product.images[0]?.driveId.substring(0,6)}
-              </div>
+              {product.images[0]?.driveId ? (
+                <img 
+                  src={`https://drive.google.com/thumbnail?id=${product.images[0].driveId}&sz=w400`} 
+                  alt={product.name}
+                  className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                  loading="lazy"
+                />
+              ) : (
+                <div className="absolute inset-0 flex items-center justify-center text-muted-foreground text-xs">No Image</div>
+              )}
               <button 
                 onClick={toggleFavorite}
                 className="absolute top-2 right-2 p-2 bg-background/80 backdrop-blur rounded-full hover:text-primary z-10"
@@ -83,9 +90,16 @@ export function ProductCard({ product }: { product: Product }) {
           #{product.productNumber}
         </div>
         <div className="relative aspect-square w-full bg-muted">
-          <div className="absolute inset-0 flex items-center justify-center text-muted-foreground text-xs">
-            IMG: {product.images[0]?.driveId.substring(0,6)}
-          </div>
+          {product.images[0]?.driveId ? (
+            <img 
+              src={`https://drive.google.com/thumbnail?id=${product.images[0].driveId}&sz=w600`} 
+              alt={product.name}
+              className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+              loading="lazy"
+            />
+          ) : (
+            <div className="absolute inset-0 flex items-center justify-center text-muted-foreground text-xs">No Image</div>
+          )}
           <button 
             onClick={toggleFavorite}
             className="absolute top-3 right-3 p-2 bg-background/80 backdrop-blur rounded-full hover:text-primary z-10"
