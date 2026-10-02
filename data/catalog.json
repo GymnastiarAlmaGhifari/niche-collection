@@ -107,6 +107,36 @@
   ],
   "products": [
     {
+      "id": "prod-1790919044301",
+      "slug": "lampu-merah-putih-v1",
+      "productNumber": "045",
+      "name": "Lampu Merah putih v1",
+      "categoryId": "home",
+      "subCategoryId": "decor",
+      "marketplace": "shopee",
+      "price": 15000,
+      "currency": "IDR",
+      "rating": 5,
+      "ratingCount": 1,
+      "affiliateUrl": "https://www.youtube.com/watch?v=j7fR_E5kK9c",
+      "specs": [],
+      "images": [
+        {
+          "driveId": "p111",
+          "alt": "Lampu Merah putih v1"
+        }
+      ],
+      "shortDescription": "tidak panas",
+      "curatorReview": "bagus sekali",
+      "status": "published",
+      "badges": [
+        "Baru"
+      ],
+      "isFeatured": false,
+      "createdAt": "2026-10-02T05:30:44.301Z",
+      "updatedAt": "2026-10-02T05:30:44.301Z"
+    },
+    {
       "id": "prod-001",
       "productNumber": "1",
       "slug": "lampu-meja-led-minimalis-3-mode-1",
