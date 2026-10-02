@@ -54,8 +54,8 @@ export interface Product {
   name: string
   categoryId: string
   subCategoryId: string
-  price: number
-  originalPrice?: number
+  price?: number | null
+  originalPrice?: number | null
   currency: 'IDR' | 'USD'
   rating: number
   ratingCount: number

@@ -13,7 +13,8 @@ export default async function ProductPage({ params }: { params: Promise<{ id: st
     notFound();
   }
 
-  const formatPrice = (price: number) => {
+  const formatPrice = (price?: number | null) => {
+    if (price === null || price === undefined) return "Cek di Toko";
     return new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0 }).format(price);
   };
 

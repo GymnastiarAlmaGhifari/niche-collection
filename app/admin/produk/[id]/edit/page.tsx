@@ -126,7 +126,7 @@ export default function EditProductPage({ params }: { params: Promise<{ id: stri
                 <div className="grid grid-cols-2 gap-4">
                   <div className="space-y-2">
                     <label className="text-sm font-medium">Harga Jual (Rp)</label>
-                    <Input type="number" required value={price} onChange={e=>setPrice(e.target.value)} />
+                    <Input type="number" value={price} onChange={e=>setPrice(e.target.value)} />
                   </div>
                   <div className="space-y-2">
                     <label className="text-sm font-medium">Harga Coret (Rp)</label>

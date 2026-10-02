@@ -81,7 +81,9 @@ export default function AdminProdukPage() {
                     {p.name}
                   </td>
                   <td className="px-4 py-3 text-muted-foreground">{p.categoryId}</td>
-                  <td className="px-4 py-3 text-muted-foreground">Rp {p.price.toLocaleString('id-ID')}</td>
+                  <td className="px-4 py-3 text-muted-foreground">
+                    {p.price ? `Rp ${p.price.toLocaleString('id-ID')}` : "-"}
+                  </td>
                   <td className="px-4 py-3">
                     <Badge variant={p.status === 'published' ? 'default' : 'secondary'} className={p.status === 'published' ? 'bg-emerald-500 hover:bg-emerald-600' : ''}>
                       {p.status}

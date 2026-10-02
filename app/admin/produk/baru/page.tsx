@@ -114,7 +114,7 @@ export default function AddProductPage() {
                 <div className="grid grid-cols-2 gap-4">
                   <div className="space-y-2">
                     <label className="text-sm font-medium">Harga Jual (Rp)</label>
-                    <Input placeholder="150000" type="number" required value={price} onChange={e=>setPrice(e.target.value)} />
+                    <Input placeholder="150000" type="number" value={price} onChange={e=>setPrice(e.target.value)} />
                   </div>
                   <div className="space-y-2">
                     <label className="text-sm font-medium">Harga Coret (Rp)</label>

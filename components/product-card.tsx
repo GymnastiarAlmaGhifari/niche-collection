@@ -18,7 +18,8 @@ export function ProductCard({ product }: { product: Product }) {
     else addFavorite(product.id);
   };
 
-  const formatPrice = (price: number) => {
+  const formatPrice = (price?: number | null) => {
+    if (price === null || price === undefined) return "Harga Cek di Toko";
     return new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0 }).format(price);
   };
 

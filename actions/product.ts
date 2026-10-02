@@ -34,8 +34,8 @@ export async function addProductAction(productData: any) {
       categoryId: "home", // hardcoded for demo or passed from form
       subCategoryId: "decor", // hardcoded for demo
       marketplace: productData.marketplace,
-      price: parseInt(productData.price),
-      originalPrice: productData.originalPrice ? parseInt(productData.originalPrice) : undefined,
+      price: productData.price ? parseInt(productData.price) : null,
+      originalPrice: productData.originalPrice ? parseInt(productData.originalPrice) : null,
       currency: "IDR",
       rating: 5.0,
       ratingCount: 1,
