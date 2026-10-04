@@ -4,6 +4,7 @@ import { getProducts } from "@/lib/data";
 import { Card, CardContent } from "@/components/ui/card";
 import { ImageIcon, Video, ExternalLink, Loader2 } from "lucide-react";
 import { Product } from "@/types/catalog";
+import { getImageUrl, getMediaLink } from "@/lib/utils";
 
 export default function AdminMediaPage() {
   const [products, setProducts] = useState<Product[]>([]);
@@ -56,7 +57,7 @@ export default function AdminMediaPage() {
               <div className="relative aspect-square bg-muted">
                 {item.type === "image" ? (
                   <img
-                    src={`https://drive.google.com/thumbnail?id=${item.driveId}&sz=w300`}
+                    src={getImageUrl(item.driveId, 'w300')}
                     alt={item.alt}
                     className="absolute inset-0 w-full h-full object-cover"
                     loading="lazy"
@@ -78,7 +79,7 @@ export default function AdminMediaPage() {
                   )}
                 </div>
                 <a
-                  href={`https://drive.google.com/file/d/${item.driveId}/view`}
+                  href={getMediaLink(item.driveId)}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="absolute top-2 right-2 bg-background/80 backdrop-blur p-1.5 rounded-full opacity-0 group-hover:opacity-100 transition-opacity"

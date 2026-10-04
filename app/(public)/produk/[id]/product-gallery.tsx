@@ -4,6 +4,7 @@ import useEmblaCarousel from 'embla-carousel-react';
 import { ProductImage } from '@/types/catalog';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { getImageUrl } from '@/lib/utils';
 
 export function ProductGallery({ images }: { images: ProductImage[] }) {
   const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true });
@@ -39,7 +40,7 @@ export function ProductGallery({ images }: { images: ProductImage[] }) {
             <div className="flex-[0_0_100%] min-w-0 relative h-full flex items-center justify-center bg-card" key={i}>
               {img.driveId ? (
                 <img 
-                  src={`https://drive.google.com/thumbnail?id=${img.driveId}&sz=w800`} 
+                  src={getImageUrl(img.driveId, 'w800')} 
                   alt={img.alt || `Gambar ${i + 1}`}
                   className="absolute inset-0 w-full h-full object-contain"
                   loading={i === 0 ? "eager" : "lazy"}

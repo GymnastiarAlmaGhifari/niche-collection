@@ -1,9 +1,37 @@
 import { getProductBySlug } from "@/lib/data";
 import { notFound } from "next/navigation";
 import { Button } from "@/components/ui/button";
-import { Star, CheckCircle2, ArrowUpRight, Share2, Heart } from "lucide-react";
+import { Star, CheckCircle2, ArrowUpRight, Share2, Heart, Play } from "lucide-react";
 import Link from "next/link";
 import { ProductGallery } from "./product-gallery";
+
+/**
+ * Determines the type & embed URL from a videoDriveId value.
+ * Supports:
+ *  - Google Drive file IDs  → embedded via drive.google.com/file/d/.../preview
+ *  - YouTube video IDs or full URLs → embedded via youtube-nocookie.com
+ *  - Direct video URLs (.mp4, .webm, etc.) → rendered with <video> tag
+ */
+function getVideoEmbed(videoDriveId: string): { type: 'iframe' | 'video'; src: string } | null {
+  if (!videoDriveId) return null;
+  const v = videoDriveId.trim();
+
+  // YouTube full URL
+  const ytMatch = v.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/|youtube\.com\/embed\/)([\w-]{11})/);
+  if (ytMatch) {
+    return { type: 'iframe', src: `https://www.youtube-nocookie.com/embed/${ytMatch[1]}?rel=0` };
+  }
+  // YouTube ID only (11 chars, alphanumeric + dash/underscore)
+  if (/^[\w-]{11}$/.test(v)) {
+    return { type: 'iframe', src: `https://www.youtube-nocookie.com/embed/${v}?rel=0` };
+  }
+  // Direct video URL
+  if (/^https?:\/\/.+\.(mp4|webm|ogg|mov)(\?.*)?$/i.test(v)) {
+    return { type: 'video', src: v };
+  }
+  // Default: treat as Google Drive file ID
+  return { type: 'iframe', src: `https://drive.google.com/file/d/${v}/preview` };
+}
 
 export default async function ProductPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
@@ -18,6 +46,8 @@ export default async function ProductPage({ params }: { params: Promise<{ id: st
     return new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0 }).format(price);
   };
 
+  const videoEmbed = product.videoDriveId ? getVideoEmbed(product.videoDriveId) : null;
+
   return (
     <div className="container mx-auto px-4 py-8 max-w-5xl">
       {/* Breadcrumb */}
@@ -30,9 +60,41 @@ export default async function ProductPage({ params }: { params: Promise<{ id: st
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12">
-        {/* Left: Gallery */}
-        <div className="w-full">
+        {/* Left: Gallery + Video */}
+        <div className="w-full space-y-6">
           <ProductGallery images={product.images} />
+
+          {/* Video Section */}
+          {videoEmbed && (
+            <div className="rounded-2xl border bg-card overflow-hidden">
+              <div className="flex items-center gap-2 px-4 py-3 border-b bg-muted/30">
+                <Play className="h-4 w-4 text-primary" />
+                <h3 className="font-heading text-sm font-semibold">Video Produk</h3>
+              </div>
+              <div className="relative aspect-video w-full bg-black">
+                {videoEmbed.type === 'iframe' ? (
+                  <iframe
+                    src={videoEmbed.src}
+                    className="absolute inset-0 w-full h-full"
+                    allow="autoplay; encrypted-media; picture-in-picture"
+                    allowFullScreen
+                    loading="lazy"
+                    title={`Video ${product.name}`}
+                  />
+                ) : (
+                  <video
+                    src={videoEmbed.src}
+                    className="absolute inset-0 w-full h-full object-contain"
+                    controls
+                    preload="metadata"
+                    playsInline
+                  >
+                    Browser Anda tidak mendukung pemutar video.
+                  </video>
+                )}
+              </div>
+            </div>
+          )}
         </div>
 
         {/* Right: Info */}

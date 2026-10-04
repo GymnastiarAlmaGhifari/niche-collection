@@ -6,6 +6,7 @@ import { useUIStore } from "@/store/ui-store";
 import { useFavoritesStore } from "@/store/favorites-store";
 import { Card, CardContent } from "./ui/card";
 import { Badge } from "./ui/badge";
+import { getImageUrl } from "@/lib/utils";
 
 export function ProductCard({ product }: { product: Product }) {
   const { viewMode } = useUIStore();
@@ -34,7 +35,7 @@ export function ProductCard({ product }: { product: Product }) {
             <div className="relative w-full sm:w-48 h-48 bg-muted shrink-0">
               {product.images[0]?.driveId ? (
                 <img 
-                  src={`https://drive.google.com/thumbnail?id=${product.images[0].driveId}&sz=w400`} 
+                  src={getImageUrl(product.images[0].driveId, 'w400')} 
                   alt={product.name}
                   className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                   loading="lazy"
@@ -93,7 +94,7 @@ export function ProductCard({ product }: { product: Product }) {
         <div className="relative aspect-square w-full bg-muted">
           {product.images[0]?.driveId ? (
             <img 
-              src={`https://drive.google.com/thumbnail?id=${product.images[0].driveId}&sz=w600`} 
+              src={getImageUrl(product.images[0].driveId, 'w600')} 
               alt={product.name}
               className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
               loading="lazy"

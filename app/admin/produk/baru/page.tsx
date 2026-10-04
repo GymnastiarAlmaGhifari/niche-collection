@@ -196,18 +196,33 @@ export default function AddProductPage() {
               <CardContent className="pt-6 space-y-4">
                 <div className="flex items-center gap-2 mb-2">
                   <Info className="h-5 w-5 text-primary" />
-                  <label className="text-sm font-medium">Media (Google Drive)</label>
+                  <label className="text-sm font-medium">Media (Gambar & Video)</label>
                 </div>
-                <p className="text-xs text-muted-foreground mb-2">
-                  Upload gambar ke <strong>Google Drive</strong> dengan akses <em>"Anyone with the link"</em>, lalu salin ID-nya.
-                </p>
-                <div className="space-y-2">
-                  <label className="text-xs font-semibold">ID Gambar Utama</label>
-                  <Input placeholder="1A2B3C4D..." value={mainImageId} onChange={e=>setMainImageId(e.target.value)} />
-                </div>
-                <div className="space-y-2">
-                  <label className="text-xs font-semibold">ID Video (Opsional)</label>
-                  <Input placeholder="ID Google Drive video" value={videoId} onChange={e=>setVideoId(e.target.value)} />
+                <div className="space-y-4">
+                  <div>
+                    <p className="text-xs text-muted-foreground mb-2">
+                      <strong>Gambar:</strong> Upload gambar ke <strong>Google Drive</strong> dengan akses <em>"Anyone with the link"</em>, lalu salin ID-nya.
+                    </p>
+                    <div className="space-y-2">
+                      <label className="text-xs font-semibold">ID Gambar Utama (Google Drive)</label>
+                      <Input placeholder="1A2B3C4D..." value={mainImageId} onChange={e=>setMainImageId(e.target.value)} />
+                    </div>
+                  </div>
+                  <div className="border-t pt-4">
+                    <p className="text-xs text-muted-foreground mb-2">
+                      <strong>Video (Opsional):</strong> Mendukung beberapa sumber:
+                    </p>
+                    <ul className="text-xs text-muted-foreground mb-3 list-disc ml-4 space-y-1">
+                      <li>Google Drive ID — contoh: <code className="bg-muted px-1 rounded">1A2B3C4D5E...</code></li>
+                      <li>YouTube URL — contoh: <code className="bg-muted px-1 rounded">https://youtu.be/abc123</code></li>
+                      <li>YouTube ID — contoh: <code className="bg-muted px-1 rounded">dQw4w9WgXcQ</code></li>
+                      <li>URL Video Langsung — contoh: <code className="bg-muted px-1 rounded">https://example.com/video.mp4</code></li>
+                    </ul>
+                    <div className="space-y-2">
+                      <label className="text-xs font-semibold">ID / URL Video</label>
+                      <Input placeholder="Google Drive ID, YouTube URL/ID, atau URL video langsung" value={videoId} onChange={e=>setVideoId(e.target.value)} />
+                    </div>
+                  </div>
                 </div>
               </CardContent>
             </Card>
