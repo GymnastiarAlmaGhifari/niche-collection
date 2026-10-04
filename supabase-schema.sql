@@ -3,6 +3,14 @@
 -- Run this in Supabase SQL Editor (Dashboard → SQL Editor → New Query)
 -- ============================================
 
+-- Hapus tabel lama jika ada (Reset bersih)
+DROP TABLE IF EXISTS product_specs CASCADE;
+DROP TABLE IF EXISTS product_images CASCADE;
+DROP TABLE IF EXISTS products CASCADE;
+DROP TABLE IF EXISTS sub_categories CASCADE;
+DROP TABLE IF EXISTS categories CASCADE;
+DROP TABLE IF EXISTS site_config CASCADE;
+
 -- Categories table
 CREATE TABLE categories (
   id TEXT PRIMARY KEY DEFAULT ('cat-' || extract(epoch from now())::bigint::text || '-' || floor(random() * 1000)::text),

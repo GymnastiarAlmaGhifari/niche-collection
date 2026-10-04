@@ -260,45 +260,45 @@ INSERT INTO product_specs (product_id, label, value) VALUES
 -- Hapus images lama agar tidak duplikat
 DELETE FROM product_images WHERE product_id IN ('prod-001','prod-002','prod-003','prod-004','prod-005','prod-006','prod-007','prod-008','prod-009');
 
--- CATATAN: Ganti 'GANTI_DENGAN_DRIVE_ID_ANDA' dengan Google Drive File ID asli Anda
--- Atau bisa juga menggunakan URL gambar langsung (lihat dokumentasi)
+-- CATATAN: Karena aplikasi sudah mendukung berbagai sumber, Anda bisa memasukkan:
+-- 1. URL Penuh (Contoh: 'https://images.unsplash.com/...')
+-- 2. Google Drive ID (Contoh: '1A2B3C4D5E...')
 
 INSERT INTO product_images (product_id, drive_id, alt, sort_order) VALUES
   -- Lampu Meja LED
-  ('prod-001', 'GANTI_DENGAN_DRIVE_ID_ANDA', 'Lampu Meja LED - Tampak Depan', 0),
-  ('prod-001', 'GANTI_DENGAN_DRIVE_ID_ANDA', 'Lampu Meja LED - Tampak Samping', 1),
+  ('prod-001', 'https://images.unsplash.com/photo-1507473885765-e6ed057f782c?q=80&w=800', 'Lampu Meja LED - Tampak Depan', 0),
+  ('prod-001', 'https://images.unsplash.com/photo-1513506003901-1e6a229e9d15?q=80&w=800', 'Lampu Meja LED - Tampak Samping', 1),
 
   -- Wajan Marble Coating
-  ('prod-002', 'GANTI_DENGAN_DRIVE_ID_ANDA', 'Wajan Marble Coating - Tampak Atas', 0),
-  ('prod-002', 'GANTI_DENGAN_DRIVE_ID_ANDA', 'Wajan Marble Coating - Detail Coating', 1),
+  ('prod-002', 'https://images.unsplash.com/photo-1584992236310-6edddc08acff?q=80&w=800', 'Wajan Marble Coating - Tampak Atas', 0),
+  ('prod-002', 'https://images.unsplash.com/photo-1579246816568-18e3852033bc?q=80&w=800', 'Wajan Marble Coating - Detail Coating', 1),
 
   -- Rak Dinding
-  ('prod-003', 'GANTI_DENGAN_DRIVE_ID_ANDA', 'Rak Dinding Kayu Jati - Tampilan', 0),
+  ('prod-003', 'https://images.unsplash.com/photo-1532372320572-cda25653a26d?q=80&w=800', 'Rak Dinding Kayu Jati - Tampilan', 0),
 
   -- TWS Earbuds
-  ('prod-004', 'GANTI_DENGAN_DRIVE_ID_ANDA', 'TWS Earbuds - Dengan Case', 0),
-  ('prod-004', 'GANTI_DENGAN_DRIVE_ID_ANDA', 'TWS Earbuds - Detail Earbuds', 1),
+  ('prod-004', 'https://images.unsplash.com/photo-1606220588913-b3aea00b6fa5?q=80&w=800', 'TWS Earbuds - Dengan Case', 0),
+  ('prod-004', 'https://images.unsplash.com/photo-1590658268037-6bf12165a8df?q=80&w=800', 'TWS Earbuds - Detail Earbuds', 1),
 
   -- Charger GaN
-  ('prod-005', 'GANTI_DENGAN_DRIVE_ID_ANDA', 'Charger GaN 65W - Tampak Depan', 0),
+  ('prod-005', 'https://images.unsplash.com/photo-1583863788434-e58a36330cf0?q=80&w=800', 'Charger GaN 65W - Tampak Depan', 0),
 
   -- Smartwatch
-  ('prod-006', 'GANTI_DENGAN_DRIVE_ID_ANDA', 'Smartwatch AMOLED - Tampak Depan', 0),
-  ('prod-006', 'GANTI_DENGAN_DRIVE_ID_ANDA', 'Smartwatch AMOLED - Tampak Samping', 1),
+  ('prod-006', 'https://images.unsplash.com/photo-1579586337278-3befd40fd17a?q=80&w=800', 'Smartwatch AMOLED - Tampak Depan', 0),
+  ('prod-006', 'https://images.unsplash.com/photo-1508685096489-7aacd43bd3b1?q=80&w=800', 'Smartwatch AMOLED - Tampak Samping', 1),
 
   -- Slingbag
-  ('prod-007', 'GANTI_DENGAN_DRIVE_ID_ANDA', 'Slingbag Kanvas - Tampak Depan', 0),
+  ('prod-007', 'https://images.unsplash.com/photo-1553062407-98eeb64c6a62?q=80&w=800', 'Slingbag Kanvas - Tampak Depan', 0),
 
   -- Jam Tangan
-  ('prod-008', 'GANTI_DENGAN_DRIVE_ID_ANDA', 'Jam Tangan Analog - Tampak Depan', 0),
+  ('prod-008', 'https://images.unsplash.com/photo-1524592094714-0f0654e20314?q=80&w=800', 'Jam Tangan Analog - Tampak Depan', 0),
 
   -- Kacamata
-  ('prod-009', 'GANTI_DENGAN_DRIVE_ID_ANDA', 'Kacamata Polarized - Tampak Depan', 0);
+  ('prod-009', 'https://images.unsplash.com/photo-1511499767150-a48a237f0083?q=80&w=800', 'Kacamata Polarized - Tampak Depan', 0);
 
 
 -- =====================
 -- SELESAI!
 -- =====================
 -- Setelah menjalankan query ini, data Anda sudah siap.
--- Jangan lupa ganti 'GANTI_DENGAN_DRIVE_ID_ANDA' dengan Drive ID gambar asli Anda.
--- Lihat dokumentasi lengkap di file panduan-aplikasi.md
+-- Gambar otomatis menggunakan sumber langsung dari Unsplash sebagai contoh!
