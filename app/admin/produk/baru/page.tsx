@@ -201,11 +201,11 @@ export default function AddProductPage() {
                 <div className="space-y-4">
                   <div>
                     <p className="text-xs text-muted-foreground mb-2">
-                      <strong>Gambar:</strong> Upload gambar ke <strong>Google Drive</strong> dengan akses <em>"Anyone with the link"</em>, lalu salin ID-nya.
+                      <strong>Gambar:</strong> Mendukung URL Langsung (contoh: <code>https://.../gambar.jpg</code>) atau <strong>Google Drive ID</strong> (contoh: <code>1A2B3C4D...</code>).
                     </p>
                     <div className="space-y-2">
-                      <label className="text-xs font-semibold">ID Gambar Utama (Google Drive)</label>
-                      <Input placeholder="1A2B3C4D..." value={mainImageId} onChange={e=>setMainImageId(e.target.value)} />
+                      <label className="text-xs font-semibold">URL / ID Gambar Utama</label>
+                      <Input placeholder="URL gambar atau Google Drive ID" value={mainImageId} onChange={e=>setMainImageId(e.target.value)} />
                     </div>
                   </div>
                   <div className="border-t pt-4">
@@ -214,8 +214,7 @@ export default function AddProductPage() {
                     </p>
                     <ul className="text-xs text-muted-foreground mb-3 list-disc ml-4 space-y-1">
                       <li>Google Drive ID — contoh: <code className="bg-muted px-1 rounded">1A2B3C4D5E...</code></li>
-                      <li>YouTube URL — contoh: <code className="bg-muted px-1 rounded">https://youtu.be/abc123</code></li>
-                      <li>YouTube ID — contoh: <code className="bg-muted px-1 rounded">dQw4w9WgXcQ</code></li>
+                      <li>YouTube URL/ID — contoh: <code className="bg-muted px-1 rounded">https://youtu.be/abc123</code></li>
                       <li>URL Video Langsung — contoh: <code className="bg-muted px-1 rounded">https://example.com/video.mp4</code></li>
                     </ul>
                     <div className="space-y-2">

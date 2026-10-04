@@ -42,7 +42,7 @@ export default function AdminMediaPage() {
       <div>
         <h1 className="text-3xl font-bold tracking-tight">Galeri Media</h1>
         <p className="text-muted-foreground mt-1">
-          Daftar semua gambar & video dari Google Drive yang digunakan di produk. Total: {mediaItems.length} media.
+          Daftar semua gambar & video yang digunakan di produk. Total: {mediaItems.length} media.
         </p>
       </div>
 
