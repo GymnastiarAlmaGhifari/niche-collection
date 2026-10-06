@@ -15,6 +15,7 @@ function formatProduct(p: any): Product {
     currency: p.currency,
     rating: p.rating,
     ratingCount: p.rating_count,
+    soldCount: p.sold_count,
     shortDescription: p.short_description,
     curatorReview: p.curator_review,
     affiliateUrl: p.affiliate_url,

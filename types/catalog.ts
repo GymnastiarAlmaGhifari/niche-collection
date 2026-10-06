@@ -57,8 +57,9 @@ export interface Product {
   price?: number | null
   originalPrice?: number | null
   currency: 'IDR' | 'USD'
-  rating: number
-  ratingCount: number
+  rating?: number | null
+  ratingCount?: number | null
+  soldCount?: number | null
   shortDescription: string
   curatorReview: string
   specs: ProductSpec[]

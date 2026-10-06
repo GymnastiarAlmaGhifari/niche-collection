@@ -111,15 +111,31 @@ export default async function ProductPage({ params }: { params: Promise<{ id: st
             {product.name}
           </h1>
 
-          <div className="flex items-center gap-4 mb-6">
-            <div className="flex items-center gap-1 text-yellow-500 font-semibold">
-              <Star className="h-5 w-5 fill-current" />
-              <span>{product.rating.toFixed(1)}</span>
+          {(product.rating != null || product.soldCount != null) && (
+            <div className="flex flex-wrap items-center gap-4 mb-6">
+              {product.rating != null && (
+                <div className="flex items-center gap-2">
+                  <div className="flex items-center gap-1 text-yellow-500 font-semibold">
+                    <Star className="h-5 w-5 fill-current" />
+                    <span>{product.rating.toFixed(1)}</span>
+                  </div>
+                  {product.ratingCount != null && (
+                    <div className="text-muted-foreground text-sm">
+                      {product.ratingCount} Ulasan
+                    </div>
+                  )}
+                </div>
+              )}
+              {product.soldCount != null && (
+                <div className="flex items-center gap-2">
+                  {product.rating != null && <div className="w-1 h-1 rounded-full bg-border" />}
+                  <div className="text-muted-foreground text-sm font-medium">
+                    {product.soldCount}+ Terjual
+                  </div>
+                </div>
+              )}
             </div>
-            <div className="text-muted-foreground text-sm">
-              {product.ratingCount} Ulasan
-            </div>
-          </div>
+          )}
 
           <div className="flex items-end gap-3 mb-8">
             <span className="text-3xl font-bold text-primary">{formatPrice(product.price)}</span>
