@@ -25,8 +25,19 @@ export function Header() {
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="container mx-auto px-4 h-16 flex items-center justify-between gap-4">
-        <Link href="/" className="shrink-0 flex items-center">
-          <img src="/logo.png" alt={config.siteName || "Niche Collection"} className="h-10 sm:h-12 w-auto object-contain" />
+        <Link href="/" className="shrink-0 flex items-center gap-2">
+          <img src="/icon.webp" alt="Icon" className="h-10 sm:h-12 w-auto object-contain" />
+          <div className="flex flex-col justify-center leading-tight">
+            <span className="font-heading font-extrabold text-[#112240] dark:text-slate-100 text-lg sm:text-xl tracking-tight -mb-1">
+              Niche
+            </span>
+            <span className="font-heading font-extrabold text-[#f58220] text-lg sm:text-xl tracking-tight">
+              Collection
+            </span>
+            <span className="text-[#112240] dark:text-slate-300 text-[0.55rem] sm:text-[0.6rem] font-bold tracking-widest mt-0.5 uppercase">
+              Best Collection Choice
+            </span>
+          </div>
         </Link>
 
         {/* Actions */}
