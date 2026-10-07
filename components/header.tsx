@@ -25,8 +25,8 @@ export function Header() {
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="container mx-auto px-4 h-16 flex items-center justify-between gap-4">
-        <Link href="/" className="font-heading font-bold text-xl text-primary shrink-0">
-          {config.siteName}
+        <Link href="/" className="shrink-0 flex items-center">
+          <img src="/logo.png" alt={config.siteName || "Niche Collection"} className="h-10 sm:h-12 w-auto object-contain" />
         </Link>
 
         {/* Actions */}

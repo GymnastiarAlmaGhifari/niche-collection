@@ -16,6 +16,15 @@ const inter = Inter({
 export const metadata: Metadata = {
   title: "Niche Collection",
   description: "Kurasi Produk Terpilih, Lintas Marketplace",
+  icons: {
+    icon: [
+      { url: '/favicon.ico' },
+      { url: '/icon.webp', type: 'image/webp' }
+    ],
+    apple: [
+      { url: '/icon.webp' }
+    ]
+  }
 };
 
 export default function RootLayout({
