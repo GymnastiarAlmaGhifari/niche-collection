@@ -18,7 +18,7 @@ export const metadata: Metadata = {
   description: "Kurasi Produk Terpilih, Lintas Marketplace",
   icons: {
     icon: [
-      { url: '/favicon.ico' },
+      { url: '/favicon.jpg', type: 'image/jpeg' },
       { url: '/icon.webp', type: 'image/webp' }
     ],
     apple: [

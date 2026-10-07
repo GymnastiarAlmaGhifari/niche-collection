@@ -11,7 +11,7 @@ import { Category } from "@/types/catalog";
 export function Header() {
   const { viewMode, toggleViewMode } = useUIStore();
   const { lang, toggleLang } = useLangStore();
-  
+
   const [config, setConfig] = useState<any>({ siteName: "Niche Collection" });
   const [categories, setCategories] = useState<Category[]>([]);
   const [mounted, setMounted] = useState(false);
@@ -34,9 +34,9 @@ export function Header() {
             <span className="font-heading font-extrabold text-[#f58220] text-lg sm:text-xl tracking-tight">
               Collection
             </span>
-            <span className="text-[#112240] dark:text-slate-300 text-[0.55rem] sm:text-[0.6rem] font-bold tracking-widest mt-0.5 uppercase">
+            {/* <span className="text-[#112240] dark:text-slate-300 text-[0.55rem] sm:text-[0.6rem] font-bold tracking-widest mt-0.5 uppercase">
               Best Collection Choice
-            </span>
+            </span> */}
           </div>
         </Link>
 
@@ -55,7 +55,7 @@ export function Header() {
           </Link>
         </div>
       </div>
-      
+
       {/* Categories Nav (Mobile scrollable, Desktop inline) */}
       <div className="container mx-auto px-4 py-2 flex items-center gap-4 overflow-x-auto no-scrollbar border-t md:border-none">
         <Link href="/katalog" className="text-sm font-medium whitespace-nowrap hover:text-primary transition-colors">
