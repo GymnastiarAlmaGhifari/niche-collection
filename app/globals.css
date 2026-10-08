@@ -119,6 +119,222 @@
     @apply bg-background text-foreground;
   }
   html {
-    @apply font-sans;
+    @apply font-sans scroll-smooth;
   }
 }
+
+/* ========================================
+   GLOBAL UX ENHANCEMENTS
+   Hover, Active, Focus, Cursor states
+   ======================================== */
+
+/* All interactive elements get pointer cursor */
+a,
+button,
+[role="button"],
+input[type="checkbox"],
+input[type="radio"],
+input[type="submit"],
+select,
+label[for],
+summary {
+  cursor: pointer;
+}
+
+/* Text inputs & textareas get text cursor */
+input[type="text"],
+input[type="email"],
+input[type="url"],
+input[type="password"],
+input[type="number"],
+input[type="search"],
+input[type="tel"],
+textarea {
+  cursor: text;
+}
+
+/* Disabled elements get not-allowed cursor */
+[disabled],
+[aria-disabled="true"],
+.disabled {
+  cursor: not-allowed !important;
+  opacity: 0.5;
+}
+
+/* Loading/processing states */
+.cursor-wait,
+[aria-busy="true"] {
+  cursor: wait !important;
+}
+
+/* Global smooth transitions for interactive elements */
+a,
+button,
+[role="button"],
+input,
+select,
+textarea {
+  transition: all 0.2s ease;
+}
+
+/* Subtle scale-down on active for buttons */
+button:active:not(:disabled),
+[role="button"]:active:not(:disabled),
+a:active {
+  transform: scale(0.97);
+  transition: transform 0.1s ease;
+}
+
+/* Focus-visible ring for keyboard navigation accessibility */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible {
+  outline: 2px solid hsl(24, 90%, 55%);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* Links hover underline animation */
+a:not([class*="no-underline"]):not([class*="flex"]):not([class*="grid"]):not([class*="inline-flex"]):not(nav a) {
+  text-decoration-color: transparent;
+  text-underline-offset: 3px;
+  transition: color 0.2s ease, text-decoration-color 0.2s ease;
+}
+
+/* Smooth image loading fade-in */
+img {
+  opacity: 1;
+  transition: opacity 0.3s ease;
+}
+img[loading="lazy"] {
+  opacity: 0;
+}
+img[loading="lazy"].loaded,
+img[loading="lazy"]:not([src=""]) {
+  opacity: 1;
+}
+
+/* Hide scrollbar utility (used in category nav) */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* Custom scrollbar styling */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: hsl(20, 8%, 75%);
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: hsl(20, 8%, 55%);
+}
+
+/* ========================================
+   RESPONSIVE SPACING SYSTEM
+   Better gaps and padding for mobile/desktop
+   ======================================== */
+
+/* Container responsive padding */
+@media (max-width: 640px) {
+  .container {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+}
+
+/* Card hover lift effect */
+[data-slot="card"] {
+  transition: box-shadow 0.3s ease, transform 0.3s ease;
+}
+[data-slot="card"]:hover {
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+}
+
+/* Badge hover micro-animation */
+[data-slot="badge"] {
+  transition: background-color 0.2s ease, transform 0.15s ease;
+}
+[data-slot="badge"]:hover {
+  transform: translateY(-1px);
+}
+
+/* Input focus glow effect */
+input:focus,
+textarea:focus,
+select:focus {
+  box-shadow: 0 0 0 3px hsla(24, 90%, 55%, 0.15);
+}
+
+/* Skeleton loading animation */
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+.skeleton-shimmer {
+  background: linear-gradient(90deg, hsl(36, 15%, 90%) 25%, hsl(36, 15%, 95%) 50%, hsl(36, 15%, 90%) 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+}
+
+/* Pulse animation for favorites heart */
+@keyframes heartPulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.2); }
+}
+.heart-pulse {
+  animation: heartPulse 0.3s ease;
+}
+
+/* Tooltip-like title enhancement for icon buttons */
+button[title]::after {
+  font-size: 0; /* Hidden tooltip, will be shown via real tooltips */
+}
+
+/* Marketplace pill colors */
+.mp-shopee { background-color: hsl(14, 100%, 57%); }
+.mp-tokopedia { background-color: hsl(140, 72%, 40%); }
+.mp-amazon { background-color: hsl(39, 100%, 50%); color: hsl(0, 0%, 10%); }
+.mp-lazada { background-color: hsl(250, 70%, 55%); }
+.mp-temu { background-color: hsl(16, 90%, 50%); }
+
+/* Smooth page transitions */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.animate-fade-in-up {
+  animation: fadeInUp 0.4s ease-out both;
+}
+
+/* Staggered children animation */
+.stagger-children > * {
+  animation: fadeInUp 0.4s ease-out both;
+}
+.stagger-children > *:nth-child(1) { animation-delay: 0ms; }
+.stagger-children > *:nth-child(2) { animation-delay: 50ms; }
+.stagger-children > *:nth-child(3) { animation-delay: 100ms; }
+.stagger-children > *:nth-child(4) { animation-delay: 150ms; }
+.stagger-children > *:nth-child(5) { animation-delay: 200ms; }
+.stagger-children > *:nth-child(6) { animation-delay: 250ms; }
+.stagger-children > *:nth-child(7) { animation-delay: 300ms; }
+.stagger-children > *:nth-child(8) { animation-delay: 350ms; }
+.stagger-children > *:nth-child(9) { animation-delay: 400ms; }
+.stagger-children > *:nth-child(10) { animation-delay: 450ms; }
