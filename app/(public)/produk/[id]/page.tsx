@@ -1,16 +1,12 @@
 import { getProductBySlug } from "@/lib/data";
 import { notFound } from "next/navigation";
-import { Button } from "@/components/ui/button";
-import { Star, CheckCircle2, ArrowUpRight, Share2, Heart, Play, ChevronRight } from "lucide-react";
+import { Star, CheckCircle2, Play, ChevronRight, Sparkles } from "lucide-react";
 import Link from "next/link";
 import { ProductGallery } from "./product-gallery";
+import { ProductDetailActions } from "@/components/product-detail-actions";
 
 /**
  * Determines the type & embed URL from a videoDriveId value.
- * Supports:
- *  - Google Drive file IDs  → embedded via drive.google.com/file/d/.../preview
- *  - YouTube video IDs or full URLs → embedded via youtube-nocookie.com
- *  - Direct video URLs (.mp4, .webm, etc.) → rendered with <video> tag
  */
 function getVideoEmbed(videoDriveId: string): { type: 'iframe' | 'video'; src: string } | null {
   if (!videoDriveId) return null;
@@ -21,7 +17,7 @@ function getVideoEmbed(videoDriveId: string): { type: 'iframe' | 'video'; src: s
   if (ytMatch) {
     return { type: 'iframe', src: `https://www.youtube-nocookie.com/embed/${ytMatch[1]}?rel=0` };
   }
-  // YouTube ID only (11 chars, alphanumeric + dash/underscore)
+  // YouTube ID only (11 chars)
   if (/^[\w-]{11}$/.test(v)) {
     return { type: 'iframe', src: `https://www.youtube-nocookie.com/embed/${v}?rel=0` };
   }
@@ -37,43 +33,50 @@ export default async function ProductPage({ params }: { params: Promise<{ id: st
   const { id } = await params;
   const product = await getProductBySlug(id);
 
-  if (!product || product.status !== 'published') {
+  if (!product) {
     notFound();
   }
 
-  const formatPrice = (price?: number | null) => {
+  const formatPrice = (price?: number | null, currency: string = "IDR") => {
     if (price === null || price === undefined) return "Cek di Toko";
+    if (currency === "USD") {
+      return new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(price);
+    }
     return new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0 }).format(price);
   };
 
   const videoEmbed = product.videoDriveId ? getVideoEmbed(product.videoDriveId) : null;
 
   return (
-    <div className="container mx-auto px-4 sm:px-6 py-8 sm:py-10 max-w-5xl animate-fade-in-up">
-      {/* Breadcrumb */}
-      <nav className="flex items-center gap-1.5 text-sm text-muted-foreground mb-8">
-        <Link href="/" className="hover:text-primary transition-colors duration-200">
+    <div className="container mx-auto px-4 sm:px-6 py-6 sm:py-10 max-w-5xl animate-fade-in-up">
+      {/* Minimalist Breadcrumb */}
+      <nav className="flex items-center gap-1.5 text-xs text-muted-foreground mb-6 sm:mb-8 overflow-x-auto no-scrollbar py-1">
+        <Link href="/" className="hover:text-primary transition-colors duration-200 shrink-0">
           Beranda
         </Link>
-        <ChevronRight className="h-3.5 w-3.5" />
-        <Link href="/katalog" className="hover:text-primary transition-colors duration-200">
+        <ChevronRight className="h-3 w-3 opacity-50 shrink-0" />
+        <Link href="/katalog" className="hover:text-primary transition-colors duration-200 shrink-0">
           Katalog
         </Link>
-        <ChevronRight className="h-3.5 w-3.5" />
-        <span className="text-foreground truncate max-w-[200px] sm:max-w-none font-medium">{product.name}</span>
+        <ChevronRight className="h-3 w-3 opacity-50 shrink-0" />
+        <span className="text-foreground truncate max-w-[200px] sm:max-w-none font-medium shrink-0">
+          {product.name}
+        </span>
       </nav>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-14">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 lg:gap-14">
         {/* Left: Gallery + Video */}
-        <div className="w-full space-y-6 sm:space-y-8">
+        <div className="w-full space-y-6">
           <ProductGallery images={product.images} />
 
           {/* Video Section */}
           {videoEmbed && (
-            <div className="rounded-2xl border border-border/50 bg-card overflow-hidden shadow-sm">
-              <div className="flex items-center gap-2 px-5 py-3.5 border-b border-border/50 bg-muted/20">
+            <div className="rounded-2xl border border-border/60 bg-card overflow-hidden shadow-xs">
+              <div className="flex items-center gap-2 px-5 py-3 border-b border-border/50 bg-muted/30">
                 <Play className="h-4 w-4 text-primary" />
-                <h3 className="font-heading text-sm font-semibold">Video Produk</h3>
+                <h3 className="font-heading text-xs font-semibold uppercase tracking-wider text-muted-foreground">
+                  Video Review Produk
+                </h3>
               </div>
               <div className="relative aspect-video w-full bg-black">
                 {videoEmbed.type === 'iframe' ? (
@@ -101,101 +104,113 @@ export default async function ProductPage({ params }: { params: Promise<{ id: st
           )}
         </div>
 
-        {/* Right: Info */}
+        {/* Right: Info & Actions */}
         <div className="flex flex-col">
-          <div className="flex gap-2 flex-wrap mb-5">
-            {product.badges.map(badge => (
-              <span key={badge} className="px-3.5 py-1.5 rounded-full bg-secondary/10 text-secondary text-xs font-semibold cursor-default transition-colors duration-200 hover:bg-secondary/20">
-                {badge}
-              </span>
-            ))}
+          {/* Platform & Product Number Bar */}
+          <div className="flex items-center gap-2 flex-wrap mb-4">
+            <span className="px-3 py-1 rounded-full bg-black/80 dark:bg-white/10 text-white font-mono text-xs font-bold tracking-wider shadow-xs">
+              #{product.productNumber}
+            </span>
+            <span className="px-3 py-1 rounded-full bg-primary/10 text-primary text-xs font-bold uppercase tracking-wider">
+              {product.marketplace}
+            </span>
           </div>
 
-          <h1 className="font-heading text-2xl sm:text-3xl md:text-4xl font-bold mb-5 leading-tight tracking-tight">
+          <h1 className="font-heading text-2xl sm:text-3xl lg:text-4xl font-extrabold mb-4 leading-tight tracking-tight text-foreground">
             {product.name}
           </h1>
 
+          {/* Rating and Sales */}
           {(product.rating != null || product.soldCount != null) && (
-            <div className="flex flex-wrap items-center gap-4 sm:gap-5 mb-7">
+            <div className="flex flex-wrap items-center gap-3 sm:gap-4 mb-6">
               {product.rating != null && (
-                <div className="flex items-center gap-2">
-                  <div className="flex items-center gap-1.5 text-yellow-500 font-semibold">
-                    <Star className="h-5 w-5 fill-current" />
-                    <span className="text-lg">{product.rating.toFixed(1)}</span>
-                  </div>
+                <div className="flex items-center gap-2 bg-yellow-500/10 dark:bg-yellow-500/20 px-3 py-1.5 rounded-xl text-yellow-600 dark:text-yellow-400">
+                  <Star className="h-4 w-4 fill-current" />
+                  <span className="font-bold text-sm">{product.rating.toFixed(1)}</span>
                   {product.ratingCount != null && (
-                    <div className="text-muted-foreground text-sm">
-                      {product.ratingCount} Ulasan
-                    </div>
+                    <span className="text-muted-foreground text-xs font-normal">
+                      ({product.ratingCount} Ulasan)
+                    </span>
                   )}
                 </div>
               )}
               {product.soldCount != null && (
-                <div className="flex items-center gap-2">
-                  {product.rating != null && <div className="w-1.5 h-1.5 rounded-full bg-border" />}
-                  <div className="text-muted-foreground text-sm font-medium">
-                    {product.soldCount}+ Terjual
-                  </div>
+                <div className="text-muted-foreground text-xs sm:text-sm font-medium bg-muted/50 px-3 py-1.5 rounded-xl">
+                  {product.soldCount}+ Terjual
                 </div>
               )}
             </div>
           )}
 
-          <div className="flex items-end gap-3 mb-10">
-            <span className="text-3xl sm:text-4xl font-bold text-primary">{formatPrice(product.price)}</span>
-            {product.originalPrice && (
-              <span className="text-lg text-muted-foreground line-through mb-1">
-                {formatPrice(product.originalPrice)}
-              </span>
-            )}
-          </div>
-
-          {/* Action Buttons */}
-          <div className="flex flex-col gap-3 mb-12">
-            <Link href={`/pergi/${product.slug}`} target="_blank" rel="nofollow sponsored noopener">
-              <Button size="lg" className="w-full h-14 rounded-full text-base font-bold shadow-md hover:shadow-xl hover:scale-[1.02] transition-all duration-300 group cursor-pointer">
-                Beli di {product.marketplace.charAt(0).toUpperCase() + product.marketplace.slice(1)}
-                <ArrowUpRight className="ml-2 h-5 w-5 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform duration-300" />
-              </Button>
-            </Link>
-
-            <div className="flex gap-3">
-              <Button variant="outline" className="flex-1 h-12 rounded-full hover:border-primary/40 hover:text-primary transition-all duration-200 cursor-pointer">
-                <Heart className="mr-2 h-4 w-4" /> Simpan
-              </Button>
-              <Button variant="outline" className="flex-1 h-12 rounded-full hover:border-primary/40 hover:text-primary transition-all duration-200 cursor-pointer">
-                <Share2 className="mr-2 h-4 w-4" /> Bagikan
-              </Button>
+          {/* Pricing */}
+          <div className="flex items-baseline gap-3 mb-6 p-4 rounded-2xl bg-muted/20 border border-border/40">
+            <div>
+              <div className="text-[11px] text-muted-foreground uppercase font-semibold tracking-wider mb-0.5">
+                Estimasi Harga
+              </div>
+              <div className="flex items-baseline gap-2.5">
+                <span className="font-heading text-2xl sm:text-3xl font-extrabold text-primary">
+                  {formatPrice(product.price, product.currency)}
+                </span>
+                {product.originalPrice && (
+                  <span className="text-sm text-muted-foreground line-through">
+                    {formatPrice(product.originalPrice, product.currency)}
+                  </span>
+                )}
+              </div>
             </div>
           </div>
 
-          {/* Review & Specs */}
-          <div className="space-y-10">
-            <div>
-              <h3 className="font-heading text-lg font-bold mb-4 flex items-center gap-2">
-                <CheckCircle2 className="h-5 w-5 text-secondary" />
-                Ulasan Kurator
-              </h3>
-              <div className="bg-muted/20 rounded-2xl p-5 sm:p-6 border border-border/30">
-                <p className="text-muted-foreground leading-relaxed">
-                  {product.curatorReview}
+          {/* Interactive CTA & Buttons */}
+          <ProductDetailActions product={product} />
+
+          {/* Curator Review & Specifications */}
+          <div className="space-y-6 pt-2 border-t border-border/40">
+            {product.curatorReview && (
+              <div>
+                <h3 className="font-heading text-sm font-bold uppercase tracking-wider text-foreground mb-3 flex items-center gap-2">
+                  <Sparkles className="h-4 w-4 text-primary" />
+                  Ulasan & Rekomendasi Kurator
+                </h3>
+                <div className="bg-card/70 backdrop-blur-sm rounded-2xl p-5 border border-border/60 shadow-xs relative">
+                  <p className="text-muted-foreground leading-relaxed text-sm sm:text-base">
+                    "{product.curatorReview}"
+                  </p>
+                </div>
+              </div>
+            )}
+
+            {product.shortDescription && (
+              <div>
+                <h3 className="font-heading text-sm font-bold uppercase tracking-wider text-foreground mb-2 flex items-center gap-2">
+                  <CheckCircle2 className="h-4 w-4 text-primary" />
+                  Deskripsi Produk
+                </h3>
+                <p className="text-sm text-muted-foreground leading-relaxed">
+                  {product.shortDescription}
                 </p>
               </div>
-            </div>
+            )}
 
-            <div>
-              <h3 className="font-heading text-lg font-bold mb-4">Spesifikasi Singkat</h3>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
-                {product.specs.map((spec, i) => (
-                  <div key={i} className="flex justify-between sm:flex-col bg-muted/15 rounded-xl px-4 py-3 border border-border/20 hover:border-border/40 transition-colors duration-200">
-                    <span className="text-muted-foreground text-sm">{spec.label}</span>
-                    <span className="font-medium text-sm text-right sm:text-left mt-0 sm:mt-1">{spec.value}</span>
-                  </div>
-                ))}
+            {product.specs && product.specs.length > 0 && (
+              <div>
+                <h3 className="font-heading text-sm font-bold uppercase tracking-wider text-foreground mb-3">
+                  Spesifikasi Singkat
+                </h3>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                  {product.specs.map((spec, i) => (
+                    <div
+                      key={i}
+                      className="flex justify-between items-center bg-muted/30 rounded-xl px-4 py-2.5 border border-border/40"
+                    >
+                      <span className="text-muted-foreground text-xs">{spec.label}</span>
+                      <span className="font-semibold text-xs text-foreground">{spec.value}</span>
+                    </div>
+                  ))}
+                </div>
               </div>
-            </div>
+            )}
           </div>
-
         </div>
       </div>
     </div>

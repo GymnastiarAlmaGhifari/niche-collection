@@ -1,4 +1,5 @@
 "use client";
+
 import Link from "next/link";
 import { Star, Heart, ExternalLink } from "lucide-react";
 import { Product } from "@/types/catalog";
@@ -27,8 +28,14 @@ export function ProductCard({ product }: { product: Product }) {
     else addFavorite(product.id);
   };
 
-  const formatPrice = (price?: number | null) => {
+  const formatPrice = (price?: number | null, currency: string = "IDR") => {
     if (price === null || price === undefined) return t("checkPrice", lang);
+    if (currency === "USD") {
+      return new Intl.NumberFormat("en-US", {
+        style: "currency",
+        currency: "USD",
+      }).format(price);
+    }
     return new Intl.NumberFormat("id-ID", {
       style: "currency",
       currency: "IDR",
@@ -36,18 +43,7 @@ export function ProductCard({ product }: { product: Product }) {
     }).format(price);
   };
 
-  const getMarketplaceTag = (mp: string) => {
-    const map: Record<string, string> = {
-      amazon: "AMZ",
-      shopee: "SHP",
-      tokopedia: "TOPED",
-      lazada: "LAZ",
-      temu: "TEMU",
-    };
-    return map[mp] || mp.toUpperCase();
-  };
-
-  const getMarketplaceName = (mp: string) => {
+  const getMarketplaceTag = (mp: string = "") => {
     const map: Record<string, string> = {
       amazon: "Amazon",
       shopee: "Shopee",
@@ -55,123 +51,137 @@ export function ProductCard({ product }: { product: Product }) {
       lazada: "Lazada",
       temu: "Temu",
     };
-    return map[mp] || mp;
+    return map[mp.toLowerCase()] || mp.toUpperCase();
   };
 
-  const getMarketplaceColor = (mp: string) => {
+  const getMarketplaceColor = (mp: string = "") => {
     const map: Record<string, string> = {
-      shopee: "bg-[#EE4D2D]",
-      tokopedia: "bg-[#42B549]",
-      amazon: "bg-[#FF9900] text-black",
-      lazada: "bg-[#6441A5]",
-      temu: "bg-[#E55B2D]",
+      shopee: "bg-[#EE4D2D] text-white",
+      tokopedia: "bg-[#03AC0E] text-white",
+      amazon: "bg-[#FF9900] text-slate-950 font-bold",
+      lazada: "bg-[#0F146D] text-white",
+      temu: "bg-[#FB6514] text-white",
     };
-    return map[mp] || "bg-black/80";
+    return map[mp.toLowerCase()] || "bg-black/75 text-white";
   };
 
+  // Safe link destination: fallback to ID if slug is not defined
+  const productHref = product.slug ? `/produk/${product.slug}` : `/produk/${product.id}`;
+
+  // =====================
+  // LIST VIEW MODE
+  // =====================
   if (viewMode === "list") {
     return (
-      <Card className="group overflow-hidden hover:shadow-lg hover:-translate-y-0.5 transition-all duration-300 relative flex flex-col h-full cursor-default">
-        <div className="absolute top-0 left-0 bg-primary text-primary-foreground font-bold px-3 py-1.5 rounded-br-xl z-20 text-sm shadow-sm">
-          #{product.productNumber}
-        </div>
-        <div
-          className={`absolute top-0 right-0 ${getMarketplaceColor(product.marketplace)} text-white font-bold px-3 py-1.5 rounded-bl-xl z-20 text-xs shadow-sm`}
-        >
-          {getMarketplaceTag(product.marketplace)}
-        </div>
+      <Card className="group overflow-hidden rounded-2xl border border-border/60 hover:border-primary/40 hover:shadow-lg hover:-translate-y-0.5 transition-all duration-300 relative flex flex-col h-full bg-card">
         <CardContent className="p-0 flex flex-col sm:flex-row h-full">
+          {/* Image & Floating Overlays */}
           <Link
-            href={`/produk/${product.slug}`}
-            className="relative w-full sm:w-52 h-52 bg-muted shrink-0 block overflow-hidden no-underline"
+            href={productHref}
+            className="relative w-full sm:w-56 h-56 bg-muted shrink-0 block overflow-hidden no-underline"
           >
-            {product.images[0]?.driveId ? (
+            {product.images && product.images[0]?.driveId ? (
               <img
                 src={getImageUrl(product.images[0].driveId, "w400")}
                 alt={product.name}
-                className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 ease-out group-hover:scale-105"
                 loading="lazy"
               />
             ) : (
-              <div className="absolute inset-0 flex items-center justify-center text-muted-foreground text-xs">
+              <div className="absolute inset-0 flex items-center justify-center text-muted-foreground text-xs font-medium">
                 No Image
               </div>
             )}
-            <button
-              onClick={toggleFavorite}
-              className={`absolute top-10 right-3 sm:top-3 sm:right-3 p-2.5 bg-background/90 backdrop-blur-sm rounded-full z-30 transition-all duration-200 hover:bg-background hover:scale-110 active:scale-95 ${
-                favorite
-                  ? "text-red-500 hover:text-red-600"
-                  : "text-muted-foreground hover:text-red-500"
-              }`}
-              title={favorite ? "Remove from favorites" : "Add to favorites"}
-            >
-              <Heart
-                className={`h-4 w-4 transition-all duration-200 ${favorite ? "fill-current" : ""} ${heartAnimating ? "heart-pulse" : ""}`}
-              />
-            </button>
-          </Link>
-          <div className="p-5 flex flex-col flex-1 pl-5 sm:pl-7">
-            <div className="flex gap-2 flex-wrap mb-3">
-              {product.badges.map((badge) => (
-                <Badge
-                  key={badge}
-                  variant="secondary"
-                  className="text-xs bg-secondary/10 text-secondary hover:bg-secondary/20 cursor-default"
-                >
-                  {badge}
-                </Badge>
-              ))}
+
+            {/* Top Badges */}
+            <div className="absolute top-3 left-3 z-10">
+              <span className="px-2.5 py-1 rounded-full bg-black/60 backdrop-blur-md text-white font-mono text-[11px] font-semibold tracking-wider shadow-sm">
+                #{product.productNumber}
+              </span>
             </div>
-            <Link href={`/produk/${product.slug}`} className="no-underline">
-              <h3 className="font-heading font-semibold text-lg mb-2 hover:text-primary transition-colors duration-200 line-clamp-2 cursor-pointer">
+
+            <div className="absolute top-3 right-3 z-10 flex items-center gap-2">
+              <span
+                className={`px-2.5 py-0.5 rounded-full text-[10px] font-bold shadow-sm backdrop-blur-sm ${getMarketplaceColor(product.marketplace)}`}
+              >
+                {getMarketplaceTag(product.marketplace)}
+              </span>
+              <button
+                onClick={toggleFavorite}
+                className={`p-2 bg-white/90 dark:bg-black/80 backdrop-blur-md rounded-full shadow-sm transition-all duration-200 hover:scale-110 active:scale-95 cursor-pointer ${
+                  favorite
+                    ? "text-red-500 hover:text-red-600"
+                    : "text-muted-foreground hover:text-red-500"
+                }`}
+                title={favorite ? "Hapus dari favorit" : "Tambah ke favorit"}
+              >
+                <Heart
+                  className={`h-3.5 w-3.5 transition-all duration-200 ${favorite ? "fill-current" : ""} ${heartAnimating ? "heart-pulse" : ""}`}
+                />
+              </button>
+            </div>
+          </Link>
+
+          {/* Product Details */}
+          <div className="p-5 flex flex-col flex-1 pl-5 sm:pl-7">
+            <Link href={productHref} className="no-underline">
+              <h3 className="font-heading font-bold text-base sm:text-lg mb-2 text-foreground group-hover:text-primary transition-colors duration-200 line-clamp-2 leading-snug cursor-pointer">
                 {product.name}
               </h3>
             </Link>
-            <p className="text-sm text-muted-foreground line-clamp-2 mb-4">
+
+            <p className="text-xs sm:text-sm text-muted-foreground line-clamp-2 mb-4 leading-relaxed">
               {product.shortDescription}
             </p>
 
-            <div className="mt-auto flex flex-col gap-4">
+            <div className="mt-auto flex flex-col gap-3 pt-2">
               <div className="flex items-end justify-between">
                 <div>
                   {(product.rating != null || product.soldCount != null) && (
-                    <div className="flex items-center gap-1.5 mb-2 text-sm font-medium">
+                    <div className="flex items-center gap-1.5 mb-1.5 text-xs font-medium">
                       {product.rating != null && (
-                        <>
-                          <Star className="h-4 w-4 fill-yellow-500 text-yellow-500" />
-                          <span className="text-yellow-600 dark:text-yellow-400">
+                        <div className="flex items-center gap-1 text-yellow-500">
+                          <Star className="h-3.5 w-3.5 fill-current" />
+                          <span className="font-bold text-foreground">
                             {product.rating.toFixed(1)}
                           </span>
                           {product.ratingCount != null && (
-                            <span className="text-muted-foreground text-xs font-normal">
+                            <span className="text-muted-foreground font-normal">
                               ({product.ratingCount})
                             </span>
                           )}
-                        </>
+                        </div>
                       )}
                       {product.soldCount != null && (
                         <>
                           {product.rating != null && (
-                            <span className="text-muted-foreground mx-1">
-                              •
-                            </span>
+                            <span className="text-muted-foreground/50 mx-1">•</span>
                           )}
-                          <span className="text-muted-foreground text-xs">
+                          <span className="text-muted-foreground">
                             {product.soldCount}+ {t("sold", lang)}
                           </span>
                         </>
                       )}
                     </div>
                   )}
-                  <div className="font-bold text-xl text-primary">
-                    {formatPrice(product.price)}
+
+                  <div className="flex items-baseline gap-2">
+                    <span className="font-heading font-extrabold text-lg sm:text-xl text-primary">
+                      {formatPrice(product.price, product.currency)}
+                    </span>
+                    {product.originalPrice && (
+                      <span className="text-xs text-muted-foreground line-through">
+                        {formatPrice(product.originalPrice, product.currency)}
+                      </span>
+                    )}
                   </div>
                 </div>
               </div>
-              <div className="grid grid-cols-2 gap-3">
-                <Link href={`/produk/${product.slug}`} className="no-underline">
-                  <button className="w-full h-10 inline-flex items-center justify-center rounded-lg border border-input bg-background px-4 text-sm font-medium shadow-sm hover:bg-accent hover:text-accent-foreground hover:border-primary/30 active:bg-accent/80 transition-all duration-200 cursor-pointer">
+
+              {/* Action Buttons */}
+              <div className="grid grid-cols-2 gap-2.5 pt-1">
+                <Link href={productHref} className="no-underline">
+                  <button className="w-full h-9.5 inline-flex items-center justify-center rounded-xl border border-border/80 bg-background text-xs font-bold text-foreground shadow-xs hover:bg-muted hover:border-primary/40 active:scale-98 transition-all cursor-pointer">
                     {t("detail", lang)}
                   </button>
                 </Link>
@@ -179,11 +189,11 @@ export function ProductCard({ product }: { product: Product }) {
                   href={product.affiliateUrl}
                   target="_blank"
                   rel="noopener noreferrer"
+                  className="no-underline"
                 >
-                  <button className="w-full h-10 inline-flex items-center justify-center rounded-lg bg-primary px-4 text-sm font-medium text-primary-foreground shadow-sm hover:bg-primary/85 hover:shadow-md active:bg-primary/75 transition-all duration-200 gap-1.5 cursor-pointer">
-                    {t("goTo", lang)}{" "}
-                    {getMarketplaceName(product.marketplace)}
-                    <ExternalLink className="h-3.5 w-3.5 opacity-70" />
+                  <button className="w-full h-9.5 inline-flex items-center justify-center rounded-xl bg-primary text-xs font-bold text-primary-foreground shadow-xs hover:opacity-90 active:scale-98 transition-all gap-1.5 cursor-pointer">
+                    <span>{t("goTo", lang)} {getMarketplaceTag(product.marketplace)}</span>
+                    <ExternalLink className="h-3 w-3 opacity-80" />
                   </button>
                 </a>
               </div>
@@ -194,114 +204,113 @@ export function ProductCard({ product }: { product: Product }) {
     );
   }
 
-  // Grid Mode
+  // =====================
+  // GRID VIEW MODE (Default)
+  // =====================
   return (
-    <Card className="group overflow-hidden hover:shadow-lg hover:-translate-y-1 transition-all duration-300 relative h-full flex flex-col cursor-default">
-      <div className="absolute top-0 left-0 bg-primary text-primary-foreground font-bold px-3 py-1.5 rounded-br-xl z-20 text-sm shadow-sm">
-        #{product.productNumber}
-      </div>
-      <div
-        className={`absolute top-0 right-0 ${getMarketplaceColor(product.marketplace)} text-white font-bold px-3 py-1.5 rounded-bl-xl z-20 text-xs shadow-sm`}
-      >
-        {getMarketplaceTag(product.marketplace)}
-      </div>
-
+    <Card className="group overflow-hidden rounded-2xl border border-border/60 hover:border-primary/40 hover:shadow-xl hover:-translate-y-1 transition-all duration-300 relative h-full flex flex-col bg-card cursor-default">
+      {/* Image Container */}
       <Link
-        href={`/produk/${product.slug}`}
-        className="relative aspect-square w-full bg-muted block overflow-hidden no-underline"
+        href={productHref}
+        className="relative aspect-square w-full bg-muted/60 block overflow-hidden no-underline"
       >
-        {product.images[0]?.driveId ? (
+        {product.images && product.images[0]?.driveId ? (
           <img
             src={getImageUrl(product.images[0].driveId, "w600")}
             alt={product.name}
-            className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+            className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 ease-out group-hover:scale-105"
             loading="lazy"
           />
         ) : (
-          <div className="absolute inset-0 flex items-center justify-center text-muted-foreground text-xs">
+          <div className="absolute inset-0 flex items-center justify-center text-muted-foreground text-xs font-medium">
             No Image
           </div>
         )}
-        {/* Gradient overlay on hover */}
-        <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-        <button
-          onClick={toggleFavorite}
-          className={`absolute top-10 right-3 p-2.5 bg-background/90 backdrop-blur-sm rounded-full z-30 transition-all duration-200 hover:bg-background hover:scale-110 active:scale-95 ${
-            favorite
-              ? "text-red-500 hover:text-red-600"
-              : "text-muted-foreground hover:text-red-500"
-          }`}
-          title={favorite ? "Remove from favorites" : "Add to favorites"}
-        >
-          <Heart
-            className={`h-4 w-4 transition-all duration-200 ${favorite ? "fill-current" : ""} ${heartAnimating ? "heart-pulse" : ""}`}
-          />
-        </button>
-        <div className="absolute bottom-2.5 left-2.5 flex gap-1.5 flex-wrap z-10">
-          {product.badges.map((badge) => (
-            <Badge
-              key={badge}
-              variant="secondary"
-              className="text-[10px] py-0.5 bg-secondary/90 text-white border-none shadow-sm backdrop-blur-sm cursor-default"
-            >
-              {badge}
-            </Badge>
-          ))}
+
+        {/* Floating Top Left Badge: Product Number */}
+        <div className="absolute top-3 left-3 z-10">
+          <span className="px-2.5 py-1 rounded-full bg-black/60 backdrop-blur-md text-white font-mono text-[10px] font-semibold tracking-wider shadow-sm">
+            #{product.productNumber}
+          </span>
+        </div>
+
+        {/* Floating Top Right: Platform Tag + Heart */}
+        <div className="absolute top-3 right-3 z-10 flex items-center gap-1.5">
+          <span
+            className={`px-2.5 py-0.5 rounded-full text-[10px] font-bold shadow-sm backdrop-blur-sm ${getMarketplaceColor(product.marketplace)}`}
+          >
+            {getMarketplaceTag(product.marketplace)}
+          </span>
+          <button
+            onClick={toggleFavorite}
+            className={`p-2 bg-white/90 dark:bg-black/80 backdrop-blur-md rounded-full shadow-sm transition-all duration-200 hover:scale-110 active:scale-95 cursor-pointer ${
+              favorite
+                ? "text-red-500 hover:text-red-600"
+                : "text-muted-foreground hover:text-red-500"
+            }`}
+            title={favorite ? "Hapus dari favorit" : "Tambah ke favorit"}
+          >
+            <Heart
+              className={`h-3.5 w-3.5 transition-all duration-200 ${favorite ? "fill-current" : ""} ${heartAnimating ? "heart-pulse" : ""}`}
+            />
+          </button>
         </div>
       </Link>
 
-      <CardContent className="p-4 sm:p-5 flex flex-col flex-1">
-        <Link href={`/produk/${product.slug}`} className="no-underline">
-          <h3 className="font-heading font-semibold text-sm sm:text-base mb-3 hover:text-primary transition-colors duration-200 line-clamp-2 cursor-pointer leading-snug">
+      {/* Card Body */}
+      <CardContent className="p-4 sm:p-4.5 flex flex-col flex-1">
+        <Link href={productHref} className="no-underline">
+          <h3 className="font-heading font-bold text-sm sm:text-base mb-2 text-foreground group-hover:text-primary transition-colors duration-200 line-clamp-2 cursor-pointer leading-snug">
             {product.name}
           </h3>
         </Link>
-        <div className="mt-auto flex flex-col gap-3">
-          <div>
-            {(product.rating != null || product.soldCount != null) && (
-              <div className="flex items-center gap-1 mb-2 text-sm font-medium">
-                {product.rating != null && (
-                  <>
-                    <Star className="h-3.5 w-3.5 fill-yellow-500 text-yellow-500" />
-                    <span className="text-yellow-600 dark:text-yellow-400">
-                      {product.rating.toFixed(1)}
+
+        <div className="mt-auto flex flex-col gap-2.5 pt-1">
+          {/* Rating and Sales */}
+          {(product.rating != null || product.soldCount != null) && (
+            <div className="flex items-center gap-1.5 text-xs font-medium">
+              {product.rating != null && (
+                <div className="flex items-center gap-1 text-yellow-500">
+                  <Star className="h-3 w-3 fill-current" />
+                  <span className="font-bold text-foreground">
+                    {product.rating.toFixed(1)}
+                  </span>
+                  {product.ratingCount != null && (
+                    <span className="text-muted-foreground text-[11px] font-normal">
+                      ({product.ratingCount})
                     </span>
-                    {product.ratingCount != null && (
-                      <span className="text-muted-foreground text-xs font-normal">
-                        ({product.ratingCount})
-                      </span>
-                    )}
-                  </>
-                )}
-                {product.soldCount != null && (
-                  <>
-                    {product.rating != null && (
-                      <span className="text-muted-foreground mx-1 text-xs">
-                        •
-                      </span>
-                    )}
-                    <span className="text-muted-foreground text-xs">
-                      {product.soldCount}+ {t("sold", lang)}
-                    </span>
-                  </>
-                )}
-              </div>
-            )}
-            <div className="flex flex-wrap items-center gap-2">
-              <span className="font-bold text-base sm:text-lg text-primary">
-                {formatPrice(product.price)}
-              </span>
-              {product.originalPrice && (
-                <span className="text-xs text-muted-foreground line-through">
-                  {formatPrice(product.originalPrice)}
-                </span>
+                  )}
+                </div>
+              )}
+              {product.soldCount != null && (
+                <>
+                  {product.rating != null && (
+                    <span className="text-muted-foreground/50 mx-0.5">•</span>
+                  )}
+                  <span className="text-muted-foreground text-[11px]">
+                    {product.soldCount}+ {t("sold", lang)}
+                  </span>
+                </>
               )}
             </div>
+          )}
+
+          {/* Pricing */}
+          <div className="flex flex-wrap items-baseline gap-1.5">
+            <span className="font-heading font-extrabold text-base sm:text-lg text-primary">
+              {formatPrice(product.price, product.currency)}
+            </span>
+            {product.originalPrice && (
+              <span className="text-xs text-muted-foreground line-through">
+                {formatPrice(product.originalPrice, product.currency)}
+              </span>
+            )}
           </div>
 
+          {/* Two Action Buttons */}
           <div className="grid grid-cols-2 gap-2 mt-1">
-            <Link href={`/produk/${product.slug}`} className="no-underline">
-              <button className="w-full h-9 inline-flex items-center justify-center rounded-lg border border-input bg-background px-3 text-xs font-medium shadow-sm hover:bg-accent hover:text-accent-foreground hover:border-primary/30 active:bg-accent/80 transition-all duration-200 cursor-pointer">
+            <Link href={productHref} className="no-underline">
+              <button className="w-full h-9 inline-flex items-center justify-center rounded-xl border border-border/80 bg-background text-xs font-bold text-foreground shadow-xs hover:bg-muted hover:border-primary/40 active:scale-98 transition-all cursor-pointer">
                 {t("detail", lang)}
               </button>
             </Link>
@@ -309,11 +318,11 @@ export function ProductCard({ product }: { product: Product }) {
               href={product.affiliateUrl}
               target="_blank"
               rel="noopener noreferrer"
+              className="no-underline"
             >
-              <button className="w-full h-9 inline-flex items-center justify-center rounded-lg bg-primary px-3 text-xs font-medium text-primary-foreground shadow-sm hover:bg-primary/85 hover:shadow-md active:bg-primary/75 transition-all duration-200 gap-1 cursor-pointer">
-                {t("goTo", lang)}{" "}
-                {getMarketplaceName(product.marketplace)}
-                <ExternalLink className="h-3 w-3 opacity-70" />
+              <button className="w-full h-9 inline-flex items-center justify-center rounded-xl bg-primary text-xs font-bold text-primary-foreground shadow-xs hover:opacity-90 active:scale-98 transition-all gap-1 cursor-pointer">
+                <span>{t("goTo", lang)} {getMarketplaceTag(product.marketplace)}</span>
+                <ExternalLink className="h-3 w-3 opacity-80" />
               </button>
             </a>
           </div>

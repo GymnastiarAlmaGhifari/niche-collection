@@ -2,7 +2,7 @@ import { supabase } from '@/lib/supabase';
 import { CatalogData, Product, Category } from '@/types/catalog';
 
 // Helper to format Supabase product to match old Product type
-function formatProduct(p: any): Product {
+export function formatProduct(p: any): Product {
   return {
     id: p.id,
     productNumber: p.product_number,
@@ -72,25 +72,77 @@ export const getProducts = async () => {
 };
 
 export const getProductById = async (id: string) => {
-  const { data } = await supabase.from('products').select('*, product_images(*), product_specs(*)').eq('id', id).single();
-  return data ? formatProduct(data) : undefined;
+  try {
+    const { data } = await supabase.from('products').select('*, product_images(*), product_specs(*)').eq('id', id).maybeSingle();
+    return data ? formatProduct(data) : undefined;
+  } catch (e) {
+    return undefined;
+  }
 };
 
 export const getProductBySlug = async (slug: string) => {
-  let { data } = await supabase.from('products').select('*, product_images(*), product_specs(*)').eq('slug', slug).single();
-  if (!data) {
-    const res = await supabase.from('products').select('*, product_images(*), product_specs(*)').eq('id', slug).single();
-    data = res.data;
+  try {
+    // 1. Try by slug
+    let { data } = await supabase.from('products').select('*, product_images(*), product_specs(*)').eq('slug', slug).maybeSingle();
+    
+    // 2. Fallback to ID
+    if (!data) {
+      const res = await supabase.from('products').select('*, product_images(*), product_specs(*)').eq('id', slug).maybeSingle();
+      data = res.data;
+    }
+    
+    // 3. Fallback without nested joins if relations fail
+    if (!data) {
+      const res = await supabase.from('products').select('*').or(`slug.eq.${slug},id.eq.${slug}`).maybeSingle();
+      data = res.data;
+    }
+
+    return data ? formatProduct(data) : undefined;
+  } catch (e) {
+    return undefined;
   }
-  return data ? formatProduct(data) : undefined;
 };
 
 export const getFeaturedProducts = async () => {
-  const { data } = await supabase.from('products').select('*, product_images(*), product_specs(*)').eq('is_featured', true).eq('status', 'published');
-  return (data || []).map(formatProduct);
+  try {
+    const { data } = await supabase
+      .from('products')
+      .select('*, product_images(*), product_specs(*)')
+      .eq('is_featured', true)
+      .neq('status', 'archived');
+
+    if (data && data.length > 0) {
+      return data.map(formatProduct);
+    }
+
+    // Fallback to latest published products if none explicitly marked featured
+    return await getPublishedProducts();
+  } catch (e) {
+    return [];
+  }
 };
 
 export const getPublishedProducts = async () => {
-  const { data } = await supabase.from('products').select('*, product_images(*), product_specs(*)').eq('status', 'published').order('created_at', { ascending: false });
-  return (data || []).map(formatProduct);
+  try {
+    const { data, error } = await supabase
+      .from('products')
+      .select('*, product_images(*), product_specs(*)')
+      .neq('status', 'archived')
+      .order('created_at', { ascending: false });
+
+    if (error || !data || data.length === 0) {
+      // Fallback query without nested joins
+      const fallback = await supabase
+        .from('products')
+        .select('*')
+        .neq('status', 'archived')
+        .order('created_at', { ascending: false });
+      return (fallback.data || []).map(formatProduct);
+    }
+
+    return data.map(formatProduct);
+  } catch (e) {
+    console.error("getPublishedProducts error:", e);
+    return [];
+  }
 };

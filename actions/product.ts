@@ -2,6 +2,7 @@
 
 import { supabaseAdmin } from "@/lib/supabase";
 import { Product } from "@/types/catalog";
+import { formatProduct } from "@/lib/data";
 import { revalidatePath } from "next/cache";
 
 export async function addProductAction(productData: any) {
@@ -28,7 +29,7 @@ export async function addProductAction(productData: any) {
       status: productData.status,
       is_featured: false,
       video_drive_id: productData.videoId || null,
-      badges: ["Baru"]
+      badges: []
     });
 
     if (error) throw error;
@@ -109,5 +110,28 @@ export async function deleteProductAction(id: string) {
   } catch (error: any) {
     console.error("Action Error:", error);
     return { success: false, error: error.message };
+  }
+}
+
+export async function getAdminProductsAction() {
+  try {
+    const { data, error } = await supabaseAdmin
+      .from('products')
+      .select('*, product_images(*), product_specs(*)')
+      .order('created_at', { ascending: false });
+
+    if (error || !data) {
+      console.warn("getAdminProductsAction joined query failed, using fallback:", error?.message);
+      const fallback = await supabaseAdmin
+        .from('products')
+        .select('*')
+        .order('created_at', { ascending: false });
+      return { success: true, data: (fallback.data || []).map(formatProduct) };
+    }
+
+    return { success: true, data: data.map(formatProduct) };
+  } catch (error: any) {
+    console.error("getAdminProductsAction error:", error);
+    return { success: false, data: [], error: error.message };
   }
 }
